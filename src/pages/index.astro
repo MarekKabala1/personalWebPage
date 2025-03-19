@@ -1,11 +1,106 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
+import { getCollection, type CollectionEntry } from 'astro:content';
+import RetroLayout from '../layouts/RetroLayout.astro';
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+type BlogPost = CollectionEntry<'blog'>;
+const allPosts = await getCollection('blog');
+const maxPostsToShow = 2;
+const sortedPosts = (allPosts as BlogPost[]).sort((a, b) => new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime()).slice(0, maxPostsToShow);
 ---
 
-<Layout>
-	<Welcome />
-</Layout>
+<RetroLayout title='My Retro WebPage'>
+	<main style='padding: 20px;'>
+		<div class='construction-wrapper'>
+			<h1 class='blink'>Welcome to My Retro WebPage!</h1>
+			<div class='retro-window' style='margin-top: 20px;'>
+				<div class='retro-window-title'>Latest Posts</div>
+				<div style='padding: 10px;'>
+					<ul style="list-style-type: '🌟'; padding: 10px;">
+						{
+							sortedPosts.length === 0 ? (
+								<div class='retro-window'>
+									<div class='retro-window-title'>No Posts Found</div>
+									<div class='post-content'>
+										<p>There are currently no blog posts available.</p>
+									</div>
+								</div>
+							) : (
+								sortedPosts.map((post) => (
+									<li>
+										<a href='/blog/first-post'>My First Blog Post</a>
+									</li>
+								))
+							)
+						}
+					</ul>
+				</div>
+			</div>
+
+			<div class='retro-window' style='margin-top: 20px;'>
+				<div class='retro-window-title'>About Me</div>
+				<div style='padding: 10px;'>
+					<p>Welcome to my corner of the World Wide Web! I'm a developer who loves the nostalgic feel of the 90s internet.</p>
+				</div>
+			</div>
+
+			<div class='retro-window' style='margin-top: 20px;'>
+				<div class='retro-window-title'>Sign My Guestbook!</div>
+				<div style='padding: 10px;'>
+					<form id='guestbook-form' style='display: flex; flex-direction: column; gap: 10px;'>
+						<input type='text' class='retro-input' placeholder='Your Name' required />
+						<textarea class='retro-input' placeholder='Your Message' rows='3' required></textarea>
+						<button type='submit' class='retro-button'>Submit</button>
+					</form>
+					<div id='guestbook-entries' style='margin-top: 20px;'></div>
+				</div>
+			</div>
+		</div>
+
+		<script>
+			// Simple guestbook functionality using localStorage
+			const form = document.getElementById('guestbook-form') as HTMLFormElement;
+			const entriesDiv = document.getElementById('guestbook-entries');
+
+			if (form && entriesDiv) {
+				const entries = JSON.parse(localStorage.getItem('guestbookEntries') || '[]');
+
+				// Display existing entries
+				entries.forEach((entry: { name: string; message: string; date: string }) => {
+					const entryElement = document.createElement('div');
+					entryElement.className = 'guestbook-entry';
+					entryElement.innerHTML = `
+          <strong>${entry.name}</strong> - ${entry.date}<br>
+          ${entry.message}
+        `;
+					entriesDiv.appendChild(entryElement);
+				});
+
+				// Handle new entries
+				form.addEventListener('submit', (e) => {
+					e.preventDefault();
+					const nameInput = form.elements[0] as HTMLInputElement;
+					const messageInput = form.elements[1] as HTMLTextAreaElement;
+
+					const newEntry = {
+						name: nameInput.value,
+						message: messageInput.value,
+						date: new Date().toLocaleDateString(),
+					};
+
+					entries.unshift(newEntry);
+					localStorage.setItem('guestbookEntries', JSON.stringify(entries));
+
+					const entryElement = document.createElement('div');
+					entryElement.className = 'guestbook-entry';
+					entryElement.innerHTML = `
+          <strong>${newEntry.name}</strong> - ${newEntry.date}<br>
+          ${newEntry.message}
+        `;
+					entriesDiv.insertBefore(entryElement, entriesDiv.firstChild);
+
+					form.reset();
+				});
+			}
+		</script>
+	</main>
+</RetroLayout>

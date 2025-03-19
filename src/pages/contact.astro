@@ -1,0 +1,171 @@
+---
+import RetroLayout from '../layouts/RetroLayout.astro';
+---
+
+<RetroLayout title='Contact Me'>
+	<div class='contact-container'>
+		<div class='retro-window contact-info'>
+			<div class='retro-window-title'>Get in Touch</div>
+			<div class='info-content'>
+				<p class='contact-intro'>
+					Want to talk about retro computing, web development, or just say hi? Drop me a message using the form below or reach out through any of these
+					channels:
+				</p>
+
+				<div class='contact-methods'>
+					<div class='contact-method'>
+						<span class='icon'>📧</span>
+						<a href='mailto:mkwebdevoloper69@gmail.com'>mkwebdevoloper69@gmail.com</a>
+					</div>
+					<div class='contact-method'>
+						<span class='icon'>💼</span>
+						<a href='https://linkedin.com/in/yourusername' target='_blank' rel='noopener noreferrer'> LinkedIn Profile </a>
+					</div>
+					<div class='contact-method'>
+						<span class='icon'>💻</span>
+						<a href='https://github.com/MarekKabala1' target='_blank' rel='noopener noreferrer'> GitHub Profile </a>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class='retro-window contact-form'>
+			<div class='retro-window-title'>Send Message</div>
+			<div class='form-content'>
+				<form id='contact-form' class='message-form'>
+					<div class='form-group'>
+						<label for='name'>Your Name:</label>
+						<input type='text' id='name' name='name' class='retro-input' required />
+					</div>
+
+					<div class='form-group'>
+						<label for='email'>Your Email:</label>
+						<input type='email' id='email' name='email' class='retro-input' required />
+					</div>
+
+					<div class='form-group'>
+						<label for='subject'>Subject:</label>
+						<input type='text' id='subject' name='subject' class='retro-input' required />
+					</div>
+
+					<div class='form-group'>
+						<label for='message'>Message:</label>
+						<textarea id='message' name='message' class='retro-input message-area' rows='5' required></textarea>
+					</div>
+
+					<button type='submit' class='retro-button submit-button'> 📤 Send Message </button>
+				</form>
+			</div>
+		</div>
+
+		<div class='retro-window faq-section'>
+			<div class='retro-window-title'>FAQ</div>
+			<div class='faq-content'>
+				<div class='faq-item'>
+					<h3>🤔 What's your response time?</h3>
+					<p>I usually respond within 24 hours, just like in the dial-up days!</p>
+				</div>
+				<div class='faq-item'>
+					<h3>💼 Are you available for freelance work?</h3>
+					<p>Yes! I'm always interested in new retro-inspired web projects.</p>
+				</div>
+				<div class='faq-item'>
+					<h3>🌍 Where are you located?</h3>
+					<p>I'm based in [Your Location], but I work remotely with clients worldwide.</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</RetroLayout>
+
+<style>
+	.contact-container {
+		display: flex;
+		flex-direction: column;
+		gap: 20px;
+	}
+
+	.info-content,
+	.form-content,
+	.faq-content {
+		padding: 20px;
+	}
+
+	.contact-intro {
+		margin-bottom: 20px;
+		line-height: 1.6;
+	}
+
+	.contact-methods {
+		display: flex;
+		flex-direction: column;
+		gap: 15px;
+	}
+
+	.contact-method {
+		display: flex;
+		align-items: center;
+		gap: 10px;
+	}
+
+	.icon {
+		font-size: 1.5em;
+	}
+
+	.message-form {
+		display: flex;
+		flex-direction: column;
+		gap: 15px;
+	}
+
+	.form-group {
+		display: flex;
+		flex-direction: column;
+		gap: 5px;
+	}
+
+	.message-area {
+		resize: vertical;
+		min-height: 100px;
+	}
+
+	.submit-button {
+		align-self: flex-end;
+		min-width: 150px;
+	}
+
+	.faq-item {
+		margin-bottom: 20px;
+	}
+
+	.faq-item h3 {
+		color: var(--theme-secondary);
+		margin-bottom: 5px;
+	}
+
+	@media (max-width: 768px) {
+		.contact-methods {
+			gap: 10px;
+		}
+
+		.submit-button {
+			width: 100%;
+		}
+	}
+</style>
+
+<script>
+	// Simple form handling
+	const form = document.getElementById('contact-form') as HTMLFormElement;
+
+	if (form) {
+		form.addEventListener('submit', (e) => {
+			e.preventDefault();
+			const formData = new FormData(form);
+
+			// Hook up server and send that info
+			alert("Thanks for your message! I'll get back to you soon!");
+			form.reset();
+		});
+	}
+</script>

@@ -1,0 +1,96 @@
+---
+import { Image } from 'astro:assets';
+import RetroLayout from '../../layouts/RetroLayout.astro';
+import { getCollection } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+import reactToReactNative from '../../image/React.png';
+
+type BlogPost = CollectionEntry<'blog'>;
+
+// Get all blog posts and sort them by date
+const allPosts = await getCollection('blog');
+
+const sortedPosts = (allPosts as BlogPost[]).sort((a, b) => new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime());
+---
+
+<RetroLayout title='My Blog Posts'>
+	<div class='blog-list'>
+		{
+			sortedPosts.length === 0 ? (
+				<div class='retro-window'>
+					<div class='retro-window-title'>No Posts Found</div>
+					<div class='post-content'>
+						<p>There are currently no blog posts available.</p>
+					</div>
+				</div>
+			) : (
+				sortedPosts.map((post) => (
+					<div class='retro-window post-item'>
+						<div class='retro-window-title'>{post.data.title}</div>
+						<div class='post-content'>
+							<div class='post-date'>
+								<small>📅 {new Date(post.data.pubDate).toLocaleDateString()}</small>
+							</div>
+							<div class='post-image'>
+								{post.data.banner ? (
+									<div class='post-image'>
+										<Image src={post.data.banner} alt={post.data.alt || 'Blog post image'} width={400} height={200} />
+									</div>
+								) : null}
+							</div>
+							<p class='post-excerpt'>{post.data.excerpt || 'Click to read more...'}</p>
+							<div class='post-link'>
+								<a href={`/blog/${post.slug}`} class='retro-button'>
+									📖 Read Post
+								</a>
+							</div>
+						</div>
+					</div>
+				))
+			)
+		}
+	</div>
+</RetroLayout>
+
+<style>
+	.blog-list {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: 20px;
+		margin-bottom: 20px;
+	}
+
+	.post-item {
+		transition: transform 0.2s;
+	}
+
+	.post-item:hover {
+		transform: translateY(-2px);
+	}
+
+	.post-content {
+		padding: 15px;
+		display: grid;
+		align-items: center;
+		grid-template-columns: 1fr;
+		grid-template-rows: 30px 3fr 2fr 1fr;
+	}
+
+	.post-date {
+		color: var(--theme-secondary);
+	}
+	.post-image {
+		width: 100%;
+		display: flex;
+		justify-content: center;
+	}
+
+	.post-excerpt {
+		line-height: 1.5;
+		text-align: center;
+	}
+
+	.post-link {
+		text-align: right;
+	}
+</style>
