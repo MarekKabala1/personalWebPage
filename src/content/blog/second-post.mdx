@@ -1,0 +1,57 @@
+---
+title: 'The Magic of Web Rings'
+pubDate: 2024-03-07
+excerpt: 'A nostalgic look back at web rings and how they helped us discover new websites in the 90s.'
+---
+
+Created by Ai.
+
+# Remember Web Rings? 💫
+
+Before search engines dominated the web, we had a more democratic way of discovering new websites: Web Rings! These magical circles of connected websites were like a digital neighborhood where like-minded site owners could help visitors discover related content.
+
+## How Web Rings Worked 🔄
+
+The concept was beautifully simple:
+
+- You'd find a web ring about a topic you loved
+- Join by adding the ring's navigation buttons to your site
+- Visitors could click "Next" or "Previous" to explore other sites in the ring
+- Everyone helped everyone else get discovered!
+
+## The Code Behind Web Rings 💾
+
+Here's what a typical web ring navigation script looked like:
+
+```js
+// Classic web ring navigation
+const ringID = 'retro-dev-123';
+let position = 42;
+const totalSites = 100;
+
+function nextSite() {
+	position = (position + 1) % totalSites;
+	navigate();
+}
+
+function prevSite() {
+	position = (position - 1 + totalSites) % totalSites;
+	navigate();
+}
+
+function navigate() {
+	// In reality, this would call the web ring's server
+	alert('Navigating to the next awesome site!');
+}
+```
+
+## Why They Were Special 🌟
+
+Web rings represented the collaborative spirit of the early web. They were:
+
+- Community-driven
+- Democratic in nature
+- Perfect for discovering niche content
+- A way to make friends online
+
+While web rings may be gone, their spirit lives on in modern social networks and content discovery systems. But there was something special about that simple "Next Site" button that made surfing the web feel like a real adventure!

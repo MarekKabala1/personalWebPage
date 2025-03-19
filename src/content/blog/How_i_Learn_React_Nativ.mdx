@@ -1,0 +1,306 @@
+---
+title: 'React Native for Web Developers: My Journey and Essential Tips'
+pubDate: 2024-03-16
+excerpt: 'Mobile apps are the future. Follow my journey from web development to React Native and learn how to leverage your existing React skills for mobile.'
+banner: '../../image/React.png'
+alt: 'React and React Native logo'
+---
+
+# My Journey from Web Development to React Native: Lessons Learned
+
+Click if you like [Skip to React Native part](#react-native)
+
+Hi, my name is Marek. I started my journey with web development around 4 years ago. I'm a self-taught person, never working in any tech-related company. I started like every person should start - from the basics.
+
+## My Learning Path
+
+My first course was **[Net Ninja HTML and CSS for beginners](https://www.youtube.com/watch?v=hu-q2zYwEYs&list=PL4cUxeGkcC9ivBf_eKCPIAYXWzLlPAm6G)**. After that, I bought from him **[JavaScript Course](https://netninja.dev/p/modern-javascript-from-novice-to-ninja)**, finished it, and I landed on React and TypeScript.
+
+### Who can help you level up:
+
+1. CSS wizard **[Kevin Powell](https://www.kevinpowell.co/)**
+2. Podcast **[Syntax](https://syntax.fm/)** Experts in the field **[Wes Bos](https://wesbos.com/)**, **[Scott Tolinski](https://tolin.ski/)** and **[CJ Reynolds](https://coding.garden/)**
+3. Learn with expert over 400 great episodes with **[Jason Lengstorf](https://www.learnwithjason.dev/)**
+4. Some live streams and not only **[Web Dev Cody](https://www.youtube.com/@WebDevCody/streams)**
+5. For React Native **[Simon Grimm](https://www.youtube.com/@galaxies_dev)**
+6. And many many more
+
+## Why I Transitioned to Mobile Development
+
+Creating websites wasn't what I think people need in 2024. My 7-year-old son always asks me to check if there is an app in the store, rather than website. This led me to look into **[PWA(Progressive Web App)](https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps)**. While PWA is a great idea, there are some limitations - one big one is 🍎.
+
+## <a href="#react-native"> React Native</a>
+
+Then I looked into the **[React Native](https://reactnative.dev/)** ecosystem, and I quickly found out that **[Expo](https://docs.expo.dev/)** is the thing to work with. Expo is a perfect tool to work with React Native, Expo offering many features out of the box, and combined with **[EAS](https://docs.expo.dev/eas/)** allows you to build, update your apps in the cloud and create the AAB or APK file for the store or local distribution. **EAS** can do much more - for all the features check the **[EAS Docs](https://docs.expo.dev/eas/)**.
+
+With React Native ecosystem, you can create multi-platform apps. You don't have to spend time creating separate projects for all platforms and hope they will look the same.
+
+Ok, that was a quick introduction of myself, and why I think React Native is great. Let's start with what I like and dislike in React Native.
+
+What I don't like in React Native? You need to set up your coding environment with some memory expensive tools like **[Android Studio](https://developer.android.com/studio)** or **[XCode](https://developer.apple.com/xcode/)**, and to run iOS simulator you will need a MacBook.
+While many say you need native development skills (C++, Swift, etc.), I'm not saying you don't need them, but I've built several working applications without them.
+
+Let's have a look at the code similarities between React and React Native to understand that React is React😂:
+
+```javascript
+import React from 'react';
+
+const WebProfile = () => {
+	const [isEditing, setIsEditing] = useState(false);
+	const [name, setName] = useState('John Doe');
+
+	return (
+		<div className='container'>
+			<h1>Profile</h1>
+			{isEditing ? <input type='text' value={name} onChange={(e) => setName(e.target.value)} /> : <p>{name}</p>}
+			<button onClick={() => setIsEditing(!isEditing)}>{isEditing ? 'Save' : 'Edit'}</button>
+		</div>
+	);
+};
+```
+
+```javascript
+import React from 'react';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+
+const NativeProfile = () => {
+	const [isEditing, setIsEditing] = useState(false);
+	const [name, setName] = useState('John Doe');
+
+	return (
+		<View style={styles.container}>
+			<Text style={styles.title}>Profile</Text>
+			{isEditing ? <TextInput value={name} onChangeText={setName} style={styles.input} /> : <Text style={styles.text}>{name}</Text>}
+			<TouchableOpacity onPress={() => setIsEditing(!isEditing)} style={styles.button}>
+				<Text style={styles.buttonText}>{isEditing ? 'Save' : 'Edit'}</Text>
+			</TouchableOpacity>
+		</View>
+	);
+};
+```
+
+Now let's quickly explain key similarities and differences:
+
+### Similarities:
+
+1. Both are using React hooks
+2. Both follow the same component structure
+3. Both manage the state the same way
+4. Both use CSS, Tailwind, or style prop for styling app
+5. Both use JavaScript for logic
+
+### Key Differences:
+
+1. React web uses HTML elements (div, p, input, button) and React Native uses built-in components (View, Text, TextInput, TouchableOpacity)
+2. Styles in React use className for your classes and React Native uses StyleSheet.create()
+3. Event handling in React uses onClick, onChange etc., and React Native uses onPress, onChangeText etc.
+
+In React Native, I discovered - when you install a new dependency that uses native module or native UI component, you will have to link your dependency to the native side of the project.
+On a positive note if you use Expo, then for the Android platform, auto-linking will work - don't have to do anything 😍 but for iOS, you still need to cd to iOS and run pod install to install the native dependencies and then rebuild your project for both platforms 🤮. In the new architecture, auto-linking is built into React Native 😍😍 but just for Android platform.
+
+The good news is if you're using JavaScript dependency, you don't have to do any of this nightmare 😂.
+
+What I like in mobile development is that we have a fully working free dataBase **[SQLite](https://www.sqlite.org/)**. The downside of that is, data is available just on that one device, but if needed, you can add ability to sync your data with some cloud providers, and data can be available the devices.
+
+If you're using SQLite, you can use SQL to write your query with some limitations. If you're more familiar with ORM style of querying data with fully typed ecosystem, you can use **[Drizzle](https://orm.drizzle.team/)** or **[Prisma](https://www.prisma.io/blog/bringing-prisma-orm-to-react-native-and-expo)**. For the validation of your data, you can use tools same as what you would use on the Web like **[Zod](https://zod.dev/)** or for the forms **[React Hook Form](https://react-hook-form.com/)**.
+
+## Development setup
+
+When I first started using React Native, I quickly found a great community with lots of helpful tips. While the official React Native and Expo docs are excellent starting points, let me share what I learned from my experience:
+
+### Choose Your Path:
+
+#### Expo (Recommended from React Team to be **The** framework for React Native):
+
+1. Easier setup,
+2. Less configuration,
+3. Great for most apps,
+4. Some limitations with native modules,
+
+#### Pure React Native:
+
+1. More control,
+2. Full access to native features,
+3. Steeper learning curve,
+4. More complex setup,
+
+### Essential Tools:
+
+1. Node.js (Latest LTS version),
+2. Code editor (I use VS Code or Windsurf),
+3. Git for version control but this is like telling you use Spoon when you eat a soup,
+4. Expo Go app on your phone for testing or prototyping,
+
+### Setup Issues I Faced:
+
+There was not many issues one main one is:
+
+1. Android Studio configuration problems
+
+### Tips from Me 😁:
+
+1. Start with Expo unless you absolutely need pure React Native,
+2. Use Expo Snack for quick prototypes,
+3. Keep your development environment updated,
+4. Use TypeScript from the start,
+
+## Debugging
+
+For Debugging I chose to use great app developed by **[Infinite Red Reactotron](https://github.com/infinitered/reactotron?tab=readme-ov-file)**. For what I using Reactotron:
+
+1.  To view app state,
+2.  API requests and response,
+3.  Display messages like console.log,
+4.  Track errors,
+5.  Check time for a loading Data,
+6.  and more for all the features check the github page.
+
+By clicking **⬆️+M/shift+M** in your terminal you will have access to the Dev tools from the React Native in the terminal where you can:
+
+1. Toggle performance monitor,
+2. Toggle Developer menu,
+3. Reload App or simply press R,
+4. Open React Devtools to view your components tree or profiler,
+5. Open Expo-Atlas **[Expo Atlas](https://expo.dev/blog/introducing-expo-atlas)**. The tool gives an excellent overview of the bundle, source and output code for individual modules, and each platform's dependency graph. **"Has to be installed separately"**
+6. Open expo-drizzle-studio-plugin if You're using Drizzle ORM
+
+Or on the emulator:
+
+Android Emulator or device (with USB):
+
+1. Press Cmd ⌘ + m or Ctrl + m,
+2. If you're using real device to debug, shake the device vertically to open menu,
+
+iOS Simulator or device (with USB):
+
+1. Press Ctrl + Cmd ⌘ + z or Cmd ⌘ + d,
+2. If you're using real device to debug, shake the device vertically to open menu or three fingers on the screen,
+
+And at the end I would like to mention about the **[Sentry](https://sentry.io/welcome/)** perfect to catch and debug your errors or performance issues when developing or when your app is live used by real users.
+
+## My stroy why i think Sentry is a good piece of software.
+
+When I was developing my second app using Expo, I faced an issue with my app where there were no errors displayed, but I was unable to see anything on the screen. The frustrating thing was that the app was working perfectly when I was developing locally, but just in the production build, I couldn't see anything. I could build and install the app with no errors, but when I launched the app, the screen was blank.
+
+    After one day of debugging, I integrated Sentry into my app and found a bug in the first launch of the app.
+
+    It turned out that I was using Drizzle, specifically the Drizzle Studio to view my database data. In the entry file of my app, I had implemented a hook from the Drizzle team called ***useDrizzleStudio(dbStudio)***. Sentry caught that this hook was causing the issue and sent me an email with the error details.
+    With this information, I quickly found out that I needed to render the hook conditionally. The solution was simple:
+
+    ```code
+    if (__DEV__) {
+    		useDrizzleStudio(dbStudio);
+    }
+    ```
+
+    What had taken me a full day of frustrating debugging was solved in minutes once Sentry pointed me to the exact problem. Maybe a more experienced developer would have found that error quicker, but I found it using Sentry, which saved me countless hours of additional troubleshooting but i spend so much time in that codebase that i can`t see any thing wrong.
+
+    This experience convinced me that Sentry is an essential tool for any serious app development project, especially when working with multiple libraries and hooks that might interact in unexpected ways in production environments.
+
+    Not an Add.
+
+## Navigation
+
+    Navigation Patterns I use the most:
+
+    1. Stack Navigation like the name is telling us is simple push/pop transition between the screens which will stack the screen on top of each other easy to add back button. I'm using stack nav for detailed views like access to links forms etc.
+    2. Tab Navigation essential for the bottom tabs menu I'm using that for my main navigation,
+    3. Drawer Navigation you can toggle that menu like the hamburger menu on the web. Works well for setting or profile menu,
+    4. Nested Navigation you can nest your navigation if necessary.
+
+    Use Screen Transition iOS uses slide effect and Android uses fade. Transition can be customized per platform simply just add:
+
+    ```
+    Platform.OS === 'ios'
+     Platform.OS === 'android'
+     Platform.OS === 'web'
+    ```
+
+    I know it's quite long to read but just few words about **State Management**, and what is \_layout.tsx.
+
+### State Management
+
+In React Native, I started with built-in useState and Context API for simpler apps - they handle most basic needs like theme switching or user authentication. For medium-sized apps, I found Zustand to be perfect with minimal setup and great TypeScript support.
+
+### \_layout.tsx
+
+The \_layout.tsx file in React Native (when using Expo Router) serves as a wrapper for your app's navigation structure and shared layouts - think of it like a template that wraps around your screens. **_From the docs - "Layout files in a directory are used to define shared UI elements such as headers, tab bars so that they persist between different routes."_** It's where you can define common UI elements, navigation patterns, and persistent components that should appear across multiple screens, making it perfect for things like bottom tabs or headers. Layout file can be used more than one time. To create layout route create \_layout.tsx file in the directory and export like a normal react component as default. When creating new app there will be a root layout for your app which will be defined in index.tsx or App.tsx. I'm using root layout to inject my providers for the app like Themes, State Management etc. In the Expo docs you can find to reduce the scope of your providers to only the routes that need them. This will improve performance and cause fewer rerenders.
+
+**Single directory app can looks like that:**
+
+```code
+📂 app
+	🗄️ index.tsx
+	🗄️ _layout.tsx(root Layout)
+	🗄️ user.tsx
+	🗄️ sharedPage.tsx
+	🗄️ auth.tsx
+```
+
+For better file organization in the app you can use groups by adding group syntax () that will prevent showing in URL:
+
+- app/user/home.tsx matches : /user/home
+- app/(user)/home.tsx matches: /home
+
+```code
+📂 app
+	🗄️ index.tsx
+ 	🗄️ _layout.tsx(root Layout)
+  📂 (user)
+	 🗄️ user.tsx (url:/user)
+  📂 (sherd)
+   🗄️ sharedPage.tsx (url:/sharedPage)
+  📂 auth
+   🗄️ auth.tsx (url:/auth/auth)
+```
+
+\*\*If you want to use multiple layout routes, Expo Router supports adding layout route for a given directory.
+
+```code
+📂 app
+   	🗄️ index.tsx
+   	🗄️ _layout.tsx(root Layout)
+  	 📂 (Tab)
+   	  🗄️ _layout.tsx(Layout for given directory)
+    	 🗄️ user.tsx (url:/user)
+  	 📂 (Drawer)
+    	 🗄️ _layout.tsx(Layout for given directory)
+    	 🗄️ configPage.tsx (url:/configPage)
+   	📂 auth
+   	  🗄️ auth.tsx (url:/auth/auth)
+```
+
+To navigate between routes simply use Link component provided by Expo. For better understanding check Expo Docs how the Expo Router works.
+
+## What's Next for My React Native Journey
+
+As I continue to explore React Native development, I'm excited about:
+
+1. **Diving deeper into animations** - React Native has powerful animation libraries like Reanimated that enable fluid, native-feeling interactions
+2. **Exploring React Native Web** - Creating truly cross-platform apps that work seamlessly on web, iOS, and Android
+3. **Building and publishing my first app to both app stores** - Taking the full journey from concept to published product
+4. **Contributing to the React Native community** - Sharing more lessons learned and possibly creating open-source components
+
+I'll be documenting my progress and sharing more tips as I learn.
+
+## Conclusion
+
+Making the transition from web development to React Native has been a rewarding journey. While there's definitely a learning curve with setting up the development environment and understanding the mobile-specific concepts, the similarities between React and React Native made the transition smoother than I expected.
+
+For web developers considering the move to mobile, here are my top recommendations:
+
+1. Start with Expo - it removes much of the initial complexity
+2. Leverage your existing React knowledge
+3. Invest time in understanding mobile-specific navigation patterns
+4. Set up proper debugging tools early (Reactotron and Sentry saved me countless hours)
+5. Don't be afraid to use familiar web tools like Zod, React Hook Form, and TypeScript
+
+The best part about React Native is that once you understand the fundamentals, you can build apps for multiple platforms with a single codebase. This efficiency is game-changing for solo developers or small teams.
+
+I hope sharing my journey helps others make the leap from web to mobile development. The skills you've built in web development are more transferable than you might think, and the mobile app ecosystem offers exciting new opportunities to reach users where they spend most of their digital time.
+
+## Let's Connect
+
+Are you also transitioning from web development to React Native? Or maybe you're an experienced React Native developer with tips to share? I'd love to hear about your experiences and challenges.
+
+Leave a comment below or reach out to me on Twitter/X at [@kabala_marek](https://twitter.com/kabala_marek).

@@ -1,0 +1,105 @@
+---
+import { getCollection } from 'astro:content';
+import RetroLayout from '../../layouts/RetroLayout.astro';
+import type { CollectionEntry } from 'astro:content';
+
+type BlogPost = CollectionEntry<'blog'>;
+
+export async function getStaticPaths() {
+	const posts = await getCollection('blog');
+	return posts.map((post: BlogPost) => ({
+		params: { slug: post.slug },
+		props: { post },
+	}));
+}
+
+interface Props {
+	post: BlogPost;
+}
+
+const { post } = Astro.props;
+const { Content } = await post.render();
+---
+
+<RetroLayout title={post.data.title}>
+	<article class='blog-post retro-window'>
+		<div class='retro-window-title'>{post.data.title}</div>
+		<div class='post-content'>
+			<div class='post-header'>
+				<div class='post-date'>
+					<small>📅 {new Date(post.data.pubDate).toLocaleDateString()}</small>
+				</div>
+			</div>
+			<div class='content-wrapper'>
+				<Content />
+			</div>
+			<div class='post-footer'>
+				<a href='/blog' class='retro-button'> ⬅️ Back to Blog </a>
+			</div>
+		</div>
+	</article>
+</RetroLayout>
+
+<style>
+	.blog-post {
+		margin: 20px;
+	}
+
+	.post-content {
+		padding: 20px;
+	}
+
+	.post-header {
+		margin-bottom: 20px;
+	}
+
+	.post-date {
+		color: var(--theme-secondary);
+	}
+
+	.content-wrapper {
+		line-height: 1.6;
+	}
+
+	.content-wrapper :global(h1) {
+		font-size: 2em;
+		margin-bottom: 1em;
+		color: var(--theme-secondary);
+	}
+
+	.content-wrapper :global(h2) {
+		font-size: 1.5em;
+		margin: 1em 0 0.5em;
+		color: var(--theme-secondary);
+	}
+
+	.content-wrapper :global(p) {
+		margin-bottom: 1em;
+	}
+
+	.content-wrapper :global(ul),
+	.content-wrapper :global(ol) {
+		margin: 1em 0;
+		padding-left: 2em;
+	}
+
+	.content-wrapper :global(li) {
+		margin: 0.5em 0;
+	}
+
+	.content-wrapper :global(pre) {
+		padding: 1em;
+		overflow-x: auto;
+		margin: 1em 0;
+	}
+
+	.content-wrapper :global(code) {
+		font-family: var(--font-retro);
+		padding: 0.2em 0.4em;
+	}
+
+	.post-footer {
+		margin-top: 40px;
+		text-align: center;
+	}
+</style>
