@@ -27,7 +27,7 @@ const sortedPosts = (allPosts as BlogPost[]).sort((a, b) => new Date(b.data.pubD
 							) : (
 								sortedPosts.map((post) => (
 									<li>
-										<a href='/blog/first-post'>My First Blog Post</a>
+										<a href='#'>{post.data.title}</a>
 									</li>
 								))
 							)
@@ -38,8 +38,14 @@ const sortedPosts = (allPosts as BlogPost[]).sort((a, b) => new Date(b.data.pubD
 
 			<div class='retro-window' style='margin-top: 20px;'>
 				<div class='retro-window-title'>About Me</div>
-				<div style='padding: 10px;'>
-					<p>Welcome to my corner of the World Wide Web! I'm a developer who loves the nostalgic feel of the 90s internet.</p>
+				<div style='padding: 10px; '>
+					<p>
+						Welcome to my corner of the World Wide Web! I'm a construction worker who loves to develop Web Sites and Mobile Apps and like the nostalgic feel of
+						the 90s internet.
+					</p>
+					<div style='display:flex;justify-content: flex-end; '>
+						<a class='retro-button' style={'color: var(--theme-text);  text-align: right; '} href='/about'> Check out </a>
+					</div>
 				</div>
 			</div>
 
