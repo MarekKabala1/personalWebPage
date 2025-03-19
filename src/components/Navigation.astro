@@ -1,0 +1,64 @@
+---
+const navItems = [
+  { href: '/', text: '🏠 Home' },
+  { href: '/blog', text: '📝 Blog' },
+  { href: '/portfolio', text: '💼 Portfolio' },
+  { href: '/about', text: '👤 About Me' },
+  { href: '/contact', text: '📧 Contact' },
+];
+
+const currentPath = new URL(Astro.request.url).pathname;
+---
+
+<nav class="retro-window nav-container">
+  <div class="retro-window-title">Navigation</div>
+  <div class="nav-content">
+    {
+      navItems.map(({ href, text }) => (
+        <a
+          href={href}
+          class:list={[
+            'nav-link',
+            'retro-button',
+            { active: currentPath === href || (href !== '/' && currentPath.startsWith(href)) }
+          ]}
+        >
+          {text}
+        </a>
+      ))
+    }
+  </div>
+</nav>
+<style>
+  .nav-container {
+    margin-bottom: 20px;
+  }
+
+  .nav-content {
+    padding: 10px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .nav-link {
+    text-decoration: none;
+    color: var(--theme-text);
+  }
+
+  .nav-link.active {
+    background: var(--theme-secondary);
+    color: white;
+    border-color: #404040 #dfdfdf #dfdfdf #404040;
+  }
+
+  @media (max-width: 768px) {
+    .nav-content {
+      flex-direction: column;
+    }
+
+    .nav-link {
+      text-align: center;
+    }
+  }
+</style>
