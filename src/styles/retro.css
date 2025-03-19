@@ -4,6 +4,14 @@
 @import './themes/web1999.css';
 @import './themes/dark-retro.css';
 
+@font-face {
+	font-family: 'Chicago';
+	src: url('/assets/fonts/Chicago.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+	font-display: swap;
+}
+
 /* Base Theme Variables */
 :root {
 	--theme-primary: #c0c0c0;
@@ -37,6 +45,14 @@
 
 /* Font loading optimization */
 .font-loaded {
+	font-display: swap;
+}
+
+/* Optimize font loading for different themes */
+.theme-win95,
+.theme-mac-os-9,
+.theme-web-1999,
+.theme-dark-retro {
 	font-display: swap;
 }
 
