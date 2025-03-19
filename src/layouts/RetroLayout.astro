@@ -1,0 +1,371 @@
+---
+import '../styles/retro.css';
+import type { RetroTheme } from '../utils/themeManager';
+import Navigation from '../components/Navigation.astro';
+import { ClientRouter } from 'astro:transitions';
+
+interface Props {
+	title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<!doctype html>
+<html lang='en'>
+	<head>
+		<meta charset='UTF-8' />
+		<meta name='viewport' content='width=device-width, initial-scale=1.0' />
+		<title>{title}</title>
+
+		<link rel='icon' type='image/x-icon' href='/favicon.ico' />
+		<!-- Google Fonts -->
+		<link rel='preconnect' href='https://fonts.googleapis.com' />
+		<link rel='preconnect' href='https://fonts.gstatic.com' crossorigin />
+		<link href='https://fonts.googleapis.com/css2?family=VT323&display=swap' rel='stylesheet' />
+		<ClientRouter />
+	</head>
+	<body>
+		<div class='layout-container'>
+			<div class='retro-window theme-switcher'>
+				<div class='retro-window-title'>Theme Switcher</div>
+				<div class='theme-buttons'>
+					<button class='retro-button' data-theme='win95'>Windows 95</button>
+					<button class='retro-button' data-theme='mac-os-9'>Mac OS 9</button>
+					<button class='retro-button' data-theme='web-1999'>Web 1999</button>
+					<button class='retro-button' data-theme='dark-retro'>🎮 Dark Retro</button>
+				</div>
+			</div>
+
+			<Navigation />
+			<div class='retro-window'>
+				<div class='retro-window-title'>Under Construction</div>
+				<div class='construction-wrapper'>
+					<div class='blink under-construction'>
+						🚧 UNDER<br />CONSTRUCTION
+					</div>
+					<div class='blink under-construction'>
+						🚧 UNDER<br />CONSTRUCTION
+					</div>
+					<div class='blink under-construction'>
+						🚧 UNDER<br />CONSTRUCTION
+					</div>
+				</div>
+			</div>
+
+			<div class='retro-window main-content'>
+				<div class='retro-window-title'>{title}</div>
+				<div class='content-wrapper'>
+					<div class='marquee'>
+						<span>Welcome to my retro website! Thanks for visiting! Don't forget to sign my guestbook!</span>
+					</div>
+
+					<slot />
+
+					<footer class='retro-footer'>
+						<div class='visitor-counter'>
+							Visitors: <span id='visitorCount'>0</span>
+						</div>
+						<div class='footer-badges'>
+							<div class='retro-badge construction-footer'>
+								🚧 UNDER<br />CONSTRUCTION
+							</div>
+							<a href='#' class='retro-badge webring'>
+								JOIN OUR<br />WEBRING
+							</a>
+						</div>
+					</footer>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
+
+<style>
+	/* Theme switcher styles */
+	.theme-buttons .retro-button.active {
+		opacity: 1;
+		transform: scale(1.05);
+		border-width: 2px;
+		font-weight: bold;
+		background: red;
+		box-shadow: inset 1px 1px #000000;
+	}
+
+	.theme-buttons .retro-button[data-active='true'] {
+		background: var(--theme-secondary);
+		color: var(--theme-primary);
+		border-style: inset;
+		transform: translateY(1px);
+		box-shadow: inset 1px 1px 3px rgba(0, 0, 0, 0.2);
+	}
+
+	/* Under construction */
+	.construction-wrapper {
+		display: flex;
+		justify-content: space-between;
+		align-content: center;
+		padding: 0 3rem;
+	}
+
+	/* Layout styles */
+	.layout-container {
+		max-width: 1200px;
+		margin: 0 auto;
+		padding: 20px;
+	}
+
+	.theme-switcher {
+		margin-bottom: 20px;
+	}
+
+	.theme-buttons {
+		padding: 10px;
+		display: flex;
+		gap: 10px;
+	}
+
+	.main-content {
+		margin: 0 10px;
+	}
+
+	.content-wrapper {
+		padding: 10px;
+	}
+
+	.retro-footer {
+		text-align: center;
+		margin-top: 20px;
+	}
+
+	.footer-badges {
+		margin-top: 15px;
+		display: flex;
+		justify-content: center;
+		gap: 10px;
+		flex-wrap: wrap;
+	}
+
+	/* Global button active state */
+	:global .retro-button:active {
+		background-color: red;
+		box-shadow: none;
+	}
+
+	/* Dark Retro Theme Specific Styles */
+	:global(.theme-dark-retro) {
+		font-size: 0.95em;
+		letter-spacing: 0.5px;
+	}
+
+	:global(.theme-dark-retro) .retro-window {
+		box-shadow: 4px 4px 0 var(--theme-accent);
+		border-color: #00ff00;
+	}
+
+	:global(.theme-dark-retro) .retro-button {
+		text-transform: uppercase;
+		font-size: 0.9em;
+		letter-spacing: 1px;
+		transition: all 0.2s ease;
+		font-weight: 500;
+		border-color: #00ff00;
+	}
+
+	:global(.theme-dark-retro) .retro-window-title {
+		font-weight: 600;
+		border-bottom-color: #00ff00;
+	}
+
+	:global(.theme-dark-retro) .retro-button:hover {
+		transform: translateY(-2px);
+		box-shadow: 0 4px 0 #00ff00;
+	}
+
+	:global(.theme-dark-retro) .retro-button:active {
+		transform: translateY(2px);
+		box-shadow: none;
+	}
+
+	:global(.theme-dark-retro) .visitor-counter {
+		font-size: 1.1em;
+		text-shadow: 1px 1px 0 #00ff00;
+		letter-spacing: 1px;
+	}
+
+	:global(.theme-dark-retro) .retro-badge {
+		border-color: #00ff00;
+		box-shadow: 2px 2px 0 #00ff00;
+	}
+
+	/* Responsive styles */
+	@media (max-width: 768px) {
+		.layout-container {
+			padding: 10px;
+		}
+
+		.theme-buttons {
+			flex-direction: column;
+		}
+
+		:global(.theme-dark-retro) {
+			font-size: 0.9em;
+		}
+
+		.footer-badges {
+			gap: 5px;
+		}
+	}
+
+	/* System fonts */
+	@font-face {
+		font-family: 'Chicago';
+		src: url('/assets/fonts/Chicago.ttf') format('truetype');
+		font-weight: normal;
+		font-style: normal;
+		font-display: swap;
+	}
+
+	/* Base theme variables */
+	:root {
+		--font-main: 'VT323', monospace;
+		--font-win95: 'MS Sans Serif', 'Arial', sans-serif;
+		--font-mac: 'Chicago', 'Arial', sans-serif;
+	}
+
+	/* Base styles */
+	html,
+	body {
+		font-family: var(--font-main);
+	}
+
+	/* Theme-specific font assignments */
+	.theme-win95,
+	.theme-win95 *:not(script):not(style) {
+		font-family: var(--font-win95) !important;
+	}
+
+	.theme-mac-os-9,
+	.theme-mac-os-9 *:not(script):not(style) {
+		font-family: var(--font-mac) !important;
+	}
+
+	.theme-web-1999,
+	.theme-web-1999 *:not(script):not(style),
+	.theme-dark-retro,
+	.theme-dark-retro *:not(script):not(style) {
+		font-family: var(--font-main) !important;
+	}
+
+	/* Dark Retro Theme text colors */
+	.theme-dark-retro,
+	.theme-dark-retro *:not(script):not(style) {
+		color: #00ff00;
+	}
+
+	.theme-dark-retro .retro-button {
+		color: #00ff00;
+		text-shadow: 0 0 5px #00ff00;
+	}
+
+	.theme-dark-retro .retro-window-title {
+		color: #ffffff;
+		text-shadow: 0 0 5px #00ff00;
+	}
+
+	/* Adjust font sizes for specific themes */
+	.theme-win95 .retro-window-title,
+	.theme-win95 .retro-button,
+	.theme-mac-os-9 .retro-window-title,
+	.theme-mac-os-9 .retro-button {
+		font-size: 0.9em;
+	}
+
+	/* Windows 95 theme */
+	.theme-win95 {
+		font-family: var(--font-win95);
+	}
+
+	.theme-win95 .retro-window-title,
+	.theme-win95 .retro-button {
+		font-family: var(--font-win95);
+		font-size: 0.9em;
+	}
+
+	/* Mac OS 9 theme */
+	.theme-mac-os-9 {
+		font-family: var(--font-mac);
+	}
+
+	.theme-mac-os-9 .retro-window-title,
+	.theme-mac-os-9 .retro-button {
+		font-family: var(--font-mac);
+		font-size: 0.9em;
+	}
+
+	/* Web 1999 and Dark Retro themes */
+	.theme-web-1999,
+	.theme-dark-retro,
+	.theme-web-1999 .retro-window-title,
+	.theme-web-1999 .retro-button,
+	.theme-dark-retro .retro-window-title,
+	.theme-dark-retro .retro-button,
+	.visitor-counter,
+	.retro-badge {
+		font-family: var(--font-main);
+	}
+</style>
+
+<script>
+	import { setTheme, getTheme, applyTheme, type RetroTheme } from '../utils/themeManager';
+
+	// Initialize theme and attach event listeners
+	function initializeTheme() {
+		const currentTheme = getTheme();
+		applyTheme(currentTheme);
+		updateActiveButton(currentTheme);
+		attachThemeSwitchers();
+	}
+
+	// Attach event listeners to theme switcher buttons
+	function attachThemeSwitchers() {
+		document.querySelectorAll('[data-theme]').forEach((button) => {
+			// Remove existing listeners to prevent duplicates
+			button.replaceWith(button.cloneNode(true));
+
+			// Get the fresh element after cloning
+			const freshButton = document.querySelector(`[data-theme="${button.getAttribute('data-theme')}"]`);
+			if (freshButton) {
+				freshButton.addEventListener('click', (e) => {
+					const theme = (e.target as HTMLElement).dataset.theme as RetroTheme;
+					if (theme) {
+						setTheme(theme);
+						updateActiveButton(theme);
+					}
+				});
+			}
+		});
+	}
+
+	// Run on initial page load
+	document.addEventListener('DOMContentLoaded', initializeTheme);
+
+	// Handle view transitions
+	document.addEventListener('astro:after-swap', initializeTheme);
+
+	// Update active button state
+	function updateActiveButton(activeTheme: RetroTheme) {
+		document.querySelectorAll('[data-theme]').forEach((button) => {
+			button.setAttribute('data-active', (button.getAttribute('data-theme') === activeTheme).toString());
+		});
+	}
+
+	// Simple visitor counter
+	const visitorCount = localStorage.getItem('visitorCount') || '0';
+	const newCount = parseInt(visitorCount) + 1;
+	localStorage.setItem('visitorCount', newCount.toString());
+	const counterElement = document.getElementById('visitorCount');
+	if (counterElement) {
+		counterElement.textContent = newCount.toString();
+	}
+</script>
