@@ -1,0 +1,383 @@
+/* Import theme files */
+@import './themes/win95.css';
+@import './themes/macos9.css';
+@import './themes/web1999.css';
+@import './themes/dark-retro.css';
+
+/* Base Theme Variables */
+:root {
+	--theme-primary: #c0c0c0;
+	--theme-secondary: #000080;
+	--theme-background: #008080;
+	--theme-text: #8bac0f;
+	--theme-link: #0000ff;
+	--theme-border: #dfdfdf #404040 #404040 #dfdfdf;
+	--theme-accent: #404040;
+
+	/* Font families */
+	--font-system: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+	--font-retro: 'Rubik Pixels', var(--font-system);
+	--font-main: var(--font-family);
+	--font-mono: var(--font-family);
+
+	/* Theme-specific font settings */
+	--win95-font-size: 1em;
+	--win95-letter-spacing: 0.2px;
+	--mac-font-size: 1.05em;
+	--mac-letter-spacing: 0.5px;
+	--web-font-size: 1em;
+	--web-letter-spacing: 0.8px;
+	--retro-font-size: 1em;
+	--retro-letter-spacing: 0.5px;
+
+	/* Common measurements */
+	--border-width: 2px;
+	--button-padding: 6px 12px;
+}
+
+/* Font loading optimization */
+.font-loaded {
+	font-display: swap;
+}
+
+/* Global Reset */
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	font-family: var(--font-family);
+	background-color: var(--background-color);
+	color: var(--text-color);
+	line-height: 1.6;
+}
+
+/* Theme-specific Typography */
+.theme-win95 {
+	font-family: var(--font-main);
+	font-size: var(--win95-font-size);
+	letter-spacing: var(--win95-letter-spacing);
+	font-weight: 500;
+}
+
+.theme-win95 .retro-window-title {
+	font-weight: normal;
+	letter-spacing: 0.5px;
+}
+
+.theme-mac-os-9 {
+	font-family: var(--font-main);
+	font-size: var(--mac-font-size);
+	letter-spacing: var(--mac-letter-spacing);
+	font-weight: 400;
+}
+
+.theme-mac-os-9 .retro-window-title {
+	font-weight: normal;
+	letter-spacing: 0.3px;
+}
+
+.theme-web-1999 {
+	font-family: var(--font-main);
+	font-size: var(--web-font-size);
+	letter-spacing: var(--web-letter-spacing);
+	font-weight: 400;
+}
+
+.theme-web-1999 .retro-window-title {
+	font-weight: normal;
+	text-transform: uppercase;
+}
+
+.theme-dark-retro {
+	font-family: var(--font-retro);
+	font-size: var(--retro-font-size);
+	letter-spacing: var(--retro-letter-spacing);
+}
+
+.theme-dark-retro .retro-window-title {
+	font-family: var(--font-retro);
+	font-weight: normal;
+	text-transform: uppercase;
+}
+
+.theme-dark-retro .retro-button {
+	font-family: var(--font-retro);
+	text-transform: uppercase;
+	font-size: 0.9em;
+	letter-spacing: 1px;
+}
+
+.theme-dark-retro .visitor-counter {
+	font-family: var(--font-retro);
+	font-size: 1.1em;
+	letter-spacing: 1px;
+}
+
+.theme-dark-retro .retro-badge {
+	font-family: var(--font-retro);
+	font-size: 0.7em;
+	letter-spacing: 0.5px;
+}
+
+/* Common Components */
+.retro-window {
+	background: var(--theme-primary);
+	border: 2px solid;
+	border-color: var(--theme-border);
+	padding: 2px;
+	margin: 10px;
+}
+
+.retro-window-title {
+	background: var(--theme-secondary);
+	color: white;
+	padding: 2px 4px;
+	font-weight: bold;
+	font-size: 0.95em;
+}
+
+.retro-button {
+	background: var(--theme-primary);
+	border: 2px solid;
+	border-color: var(--theme-border);
+	padding: 6px 12px;
+	font-family: inherit;
+	font-size: 0.9em;
+	cursor: pointer;
+	text-decoration: none;
+	display: inline-block;
+	letter-spacing: inherit;
+}
+
+.retro-input {
+	border: 2px inset #fff;
+	background: white;
+	padding: 4px;
+	font-family: inherit;
+	font-size: 0.95em;
+}
+
+/* Update code font for blog content */
+.blog-content code,
+.blog-content pre {
+	font-family: var(--font-mono);
+}
+
+/* Visitor Counter with Pixel Font */
+.visitor-counter {
+	background: #000;
+	color: #0f0;
+	font-family: var(--font-main);
+	padding: 5px 10px;
+	display: inline-block;
+	border: 2px solid #0f0;
+	font-size: 1em;
+	letter-spacing: 1px;
+}
+
+/* Retro Badges with Updated Typography */
+.retro-badge {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	border: 2px solid var(--theme-border);
+	background: var(--theme-primary);
+	font-family: var(--font-main);
+	font-size: 0.65em;
+	text-align: center;
+	line-height: 1.2;
+	padding: 2px;
+	margin: 0 5px;
+	text-decoration: none;
+	color: var(--theme-text);
+	letter-spacing: 0.5px;
+}
+
+/* Theme-specific Badge Styles */
+.theme-win95 .retro-badge {
+	font-weight: 400;
+	letter-spacing: 0.2px;
+}
+
+.theme-mac-os-9 .retro-badge {
+	font-weight: 500;
+	letter-spacing: 0.3px;
+}
+
+.theme-web-1999 .retro-badge {
+	font-weight: 600;
+	letter-spacing: 0.5px;
+	text-transform: uppercase;
+}
+
+.theme-dark-retro .retro-badge {
+	font-weight: 500;
+	letter-spacing: 0.5px;
+	text-transform: uppercase;
+}
+
+/* Responsive Typography */
+@media (max-width: 768px) {
+	:root {
+		--win95-font-size: 0.9em;
+		--mac-font-size: 0.95em;
+		--web-font-size: 0.95em;
+		--retro-font-size: 0.9em;
+	}
+
+	.retro-badge {
+		font-size: 0.6em;
+	}
+}
+
+/* Links */
+a {
+	color: var(--theme-link);
+	text-decoration: underline;
+}
+
+a:hover {
+	background-color: var(--theme-link);
+	color: var(--theme-background);
+}
+
+/* Animations */
+@keyframes marquee {
+	0% {
+		transform: translateX(100%);
+	}
+	100% {
+		transform: translateX(-100%);
+	}
+}
+
+@keyframes blink {
+	0%,
+	100% {
+		opacity: 1;
+	}
+	50% {
+		opacity: 0;
+	}
+}
+
+.marquee {
+	white-space: nowrap;
+	overflow: hidden;
+	width: 100%;
+}
+
+.marquee span {
+	display: inline-block;
+	animation: marquee 15s linear infinite;
+}
+
+.blink {
+	animation: blink 1s step-end infinite;
+}
+
+/* Special Elements */
+.under-construction {
+	text-align: center;
+	padding: 20px;
+	border: 2px dashed #ff0000;
+	margin: 20px 0;
+}
+
+/* Guestbook Entry */
+.guestbook-entry {
+	background: white;
+	border: var(--border-width) solid var(--theme-border);
+	margin: 10px 0;
+	padding: 10px;
+}
+
+/* Dark Retro Theme Overrides */
+.theme-dark-retro {
+	--pixel-shadow: 2px 2px 0 var(--theme-accent);
+}
+
+.theme-dark-retro body {
+	font-family: var(--font-pixel);
+	background-color: var(--theme-background);
+}
+
+.theme-dark-retro .retro-window {
+	border-style: solid;
+	border-width: 2px;
+	position: relative;
+	box-shadow: var(--pixel-shadow);
+}
+
+.theme-dark-retro .retro-window::after {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.15) 0px, rgba(0, 0, 0, 0.15) 1px, transparent 1px, transparent 2px);
+	pointer-events: none;
+}
+
+.theme-dark-retro .retro-window-title {
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	text-shadow: var(--pixel-shadow);
+}
+
+.theme-dark-retro .under-construction {
+	border-style: double;
+	border-width: 4px;
+	border-color: var(--theme-accent);
+	background: var(--theme-primary);
+}
+
+.theme-dark-retro .visitor-counter {
+	background: var(--theme-primary);
+	border-color: var(--theme-accent);
+	color: var(--theme-text);
+	box-shadow: inset 2px 2px 0 rgba(0, 0, 0, 0.2);
+	font-family: var(--font-pixel);
+}
+
+.theme-dark-retro a {
+	position: relative;
+	text-decoration: none;
+	padding: 5px;
+}
+
+.theme-dark-retro a:hover {
+	background: var(--theme-accent);
+	color: var(--theme-text);
+}
+
+.theme-dark-retro a::before {
+	content: ' >>';
+	position: absolute;
+	left: -11px;
+	opacity: 0;
+	transition: opacity 0.2s;
+}
+
+.theme-dark-retro a:hover::before {
+	opacity: 1;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+	.retro-window {
+		margin: 5px;
+	}
+
+	body {
+		font-size: 14px;
+	}
+
+	.theme-dark-retro {
+		--pixel-shadow: 1px 1px 0 var(--theme-accent);
+	}
+}
