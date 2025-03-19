@@ -1,0 +1,11 @@
+---
+description: 
+globs: .astro, .css
+alwaysApply: false
+---
+
+# Your rule content
+
+- use Astro
+- use plain Css
+- retro 90`s themes
