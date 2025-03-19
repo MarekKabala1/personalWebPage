@@ -1,14 +1,19 @@
 {
-  "name": "",
+  "name": "retro-blog",
+  "version": "1.0.0",
+  "description": "A nostalgic 90s-style personal blog built with Astro",
   "type": "module",
-  "version": "0.0.1",
   "scripts": {
     "dev": "astro dev",
+    "start": "astro dev",
     "build": "astro build",
-    "preview": "astro preview",
-    "astro": "astro"
+    "preview": "astro preview"
   },
   "dependencies": {
+    "@astrojs/mdx": "^4.1.0",
     "astro": "^5.4.2"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.3"
   }
 }
