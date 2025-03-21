@@ -33,9 +33,9 @@
 	--win95-letter-spacing: 0.2px;
 	--mac-font-size: 1.05em;
 	--mac-letter-spacing: 0.5px;
-	--web-font-size: 1em;
+	--web-font-size: 1.1em;
 	--web-letter-spacing: 0.8px;
-	--retro-font-size: 1em;
+	--retro-font-size: 1.1em;
 	--retro-letter-spacing: 0.5px;
 
 	/* Common measurements */
@@ -120,9 +120,7 @@ body {
 }
 
 .theme-dark-retro .retro-button {
-	font-family: var(--font-retro);
 	text-transform: uppercase;
-	font-size: 0.9em;
 	letter-spacing: 1px;
 }
 
