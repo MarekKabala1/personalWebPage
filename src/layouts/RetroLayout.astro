@@ -43,9 +43,9 @@ const { title } = Astro.props;
 			<div class='retro-window theme-switcher'>
 				<div class='retro-window-title'>Theme Switcher</div>
 				<div class='theme-buttons'>
-					<button class='retro-button' data-theme='win95'>Windows 95</button>
-					<button class='retro-button' data-theme='mac-os-9'>Mac OS 9</button>
-					<button class='retro-button' data-theme='web-1999'>Web 1999</button>
+					<button class='retro-button' data-theme='win95'>📺 Windows 95</button>
+					<button class='retro-button' data-theme='mac-os-9'>🍎 Mac OS 9</button>
+					<button class='retro-button' data-theme='web-1999'>💾 Web 1999</button>
 					<button class='retro-button' data-theme='dark-retro'>🎮 Dark Retro</button>
 				</div>
 			</div>
@@ -166,10 +166,6 @@ const { title } = Astro.props;
 	}
 
 	/* Dark Retro Theme Specific Styles */
-	:global(.theme-dark-retro) {
-		font-size: 0.95em;
-		letter-spacing: 0.5px;
-	}
 
 	:global(.theme-dark-retro) .retro-window {
 		box-shadow: 4px 4px 0 var(--theme-accent);
