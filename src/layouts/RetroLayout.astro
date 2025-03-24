@@ -41,7 +41,10 @@ const { title } = Astro.props;
 	<body>
 		<div class='layout-container'>
 			<div class='retro-window theme-switcher'>
-				<div class='retro-window-title'>Theme Switcher</div>
+				<div class='retro-window-title retro-window-title-flex'>
+					<p>Theme Switcher</p>
+					<span>x</span>
+				</div>
 				<div class='theme-buttons'>
 					<button class='retro-button' data-theme='win95'>📺 Windows 95</button>
 					<button class='retro-button' data-theme='mac-os-9'>🍎 Mac OS 9</button>
@@ -51,8 +54,11 @@ const { title } = Astro.props;
 			</div>
 
 			<Navigation />
-			<div class='retro-window'>
-				<div class='retro-window-title'>Under Construction</div>
+			<div class='retro-window construction-container'>
+				<div class='retro-window-title retro-window-title-flex'>
+					<p>Under Construction</p>
+					<span>x</span>
+				</div>
 				<div class='construction-wrapper'>
 					<div class='blink under-construction'>
 						🚧 UNDER<br />CONSTRUCTION
@@ -67,7 +73,10 @@ const { title } = Astro.props;
 			</div>
 
 			<div class='retro-window main-content'>
-				<div class='retro-window-title'>{title}</div>
+				<div class='retro-window-title retro-window-title-flex'>
+					<p>{title}</p>
+					<span>x</span>
+				</div>
 				<div class='content-wrapper'>
 					<div class='marquee'>
 						<span>Welcome to my retro website! Thanks for visiting! Don't forget to sign my guestbook!</span>
@@ -94,6 +103,54 @@ const { title } = Astro.props;
 	</body>
 </html>
 
+<script>
+	import { setTheme, getTheme, applyTheme, type RetroTheme } from '../utils/themeManager';
+
+	// Initialize theme and attach event listeners
+	function initializeTheme() {
+		const currentTheme = getTheme();
+		applyTheme(currentTheme);
+		updateActiveButton(currentTheme);
+		attachThemeSwitchers();
+	}
+
+	function attachThemeSwitchers() {
+		document.querySelectorAll('[data-theme]').forEach((button) => {
+			button.replaceWith(button.cloneNode(true));
+
+			const freshButton = document.querySelector(`[data-theme="${button.getAttribute('data-theme')}"]`);
+			if (freshButton) {
+				freshButton.addEventListener('click', (e) => {
+					const theme = (e.target as HTMLElement).dataset.theme as RetroTheme;
+					if (theme) {
+						setTheme(theme);
+						updateActiveButton(theme);
+					}
+				});
+			}
+		});
+	}
+
+	document.addEventListener('DOMContentLoaded', initializeTheme);
+
+	document.addEventListener('astro:after-swap', initializeTheme);
+
+	function updateActiveButton(activeTheme: RetroTheme) {
+		document.querySelectorAll('[data-theme]').forEach((button) => {
+			button.setAttribute('data-active', (button.getAttribute('data-theme') === activeTheme).toString());
+		});
+	}
+
+	// Simple visitor counter
+	const visitorCount = localStorage.getItem('visitorCount') || '0';
+	const newCount = parseInt(visitorCount) + 1;
+	localStorage.setItem('visitorCount', newCount.toString());
+	const counterElement = document.getElementById('visitorCount');
+	if (counterElement) {
+		counterElement.textContent = newCount.toString();
+	}
+</script>
+
 <style>
 	/* Theme switcher styles */
 	.theme-buttons .retro-button.active {
@@ -114,6 +171,9 @@ const { title } = Astro.props;
 	}
 
 	/* Under construction */
+	.construction-container {
+		margin-bottom: 20px;
+	}
 	.construction-wrapper {
 		display: flex;
 		justify-content: space-between;
@@ -158,9 +218,15 @@ const { title } = Astro.props;
 		gap: 10px;
 		flex-wrap: wrap;
 	}
+	/* Global flex*/
+	:global(.retro-window-title-flex) {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
 
 	/* Global button active state */
-	:global .retro-button:active {
+	:global(.retro-button:active) {
 		background-color: red;
 		box-shadow: none;
 	}
@@ -181,7 +247,7 @@ const { title } = Astro.props;
 		border-color: #00ff00;
 	}
 
-	:global(.theme-dark-retro) .retro-window-title {
+	:global(.theme-dark-retro) (.retro-window-title ) {
 		font-weight: 600;
 		border-bottom-color: #00ff00;
 	}
@@ -324,57 +390,3 @@ const { title } = Astro.props;
 		font-family: var(--font-main);
 	}
 </style>
-
-<script>
-	import { setTheme, getTheme, applyTheme, type RetroTheme } from '../utils/themeManager';
-
-	// Initialize theme and attach event listeners
-	function initializeTheme() {
-		const currentTheme = getTheme();
-		applyTheme(currentTheme);
-		updateActiveButton(currentTheme);
-		attachThemeSwitchers();
-	}
-
-	// Attach event listeners to theme switcher buttons
-	function attachThemeSwitchers() {
-		document.querySelectorAll('[data-theme]').forEach((button) => {
-			// Remove existing listeners to prevent duplicates
-			button.replaceWith(button.cloneNode(true));
-
-			// Get the fresh element after cloning
-			const freshButton = document.querySelector(`[data-theme="${button.getAttribute('data-theme')}"]`);
-			if (freshButton) {
-				freshButton.addEventListener('click', (e) => {
-					const theme = (e.target as HTMLElement).dataset.theme as RetroTheme;
-					if (theme) {
-						setTheme(theme);
-						updateActiveButton(theme);
-					}
-				});
-			}
-		});
-	}
-
-	// Run on initial page load
-	document.addEventListener('DOMContentLoaded', initializeTheme);
-
-	// Handle view transitions
-	document.addEventListener('astro:after-swap', initializeTheme);
-
-	// Update active button state
-	function updateActiveButton(activeTheme: RetroTheme) {
-		document.querySelectorAll('[data-theme]').forEach((button) => {
-			button.setAttribute('data-active', (button.getAttribute('data-theme') === activeTheme).toString());
-		});
-	}
-
-	// Simple visitor counter
-	const visitorCount = localStorage.getItem('visitorCount') || '0';
-	const newCount = parseInt(visitorCount) + 1;
-	localStorage.setItem('visitorCount', newCount.toString());
-	const counterElement = document.getElementById('visitorCount');
-	if (counterElement) {
-		counterElement.textContent = newCount.toString();
-	}
-</script>
