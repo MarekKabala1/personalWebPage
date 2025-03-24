@@ -14,19 +14,38 @@
 
 /* Base Theme Variables */
 :root {
-	--theme-primary: #c0c0c0;
-	--theme-secondary: #000080;
-	--theme-background: #008080;
-	--theme-text: #8bac0f;
-	--theme-link: #0000ff;
-	--theme-border: #dfdfdf #404040 #404040 #dfdfdf;
-	--theme-accent: #404040;
+	/* Colors */
+	--color-primary: #c0c0c0;
+	--color-secondary: #000080;
+	--color-background: #008080;
+	--color-text: #8bac0f;
+	--color-link: #0000ff;
+	--color-border: #dfdfdf;
+	--color-border-shadow: #404040;
+	--color-accent: #404040;
+	--color-white: #ffffff;
+	--color-black: #000000;
+	--color-green: #00ff00;
+	--color-red: #ff0000;
+	--color-yellow: #ffff00;
+	--color-magenta: #ff00ff;
+	--color-cyan: #00ffff;
+
+	/* Theme Colors */
+	--theme-primary: var(--color-primary);
+	--theme-secondary: var(--color-secondary);
+	--theme-background: var(--color-background);
+	--theme-text: var(--color-text);
+	--theme-link: var(--color-link);
+	--theme-border: var(--color-border) var(--color-border-shadow) var(--color-border-shadow) var(--color-border);
+	--theme-accent: var(--color-accent);
 
 	/* Font families */
 	--font-system: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
 	--font-retro: 'Rubik Pixels', var(--font-system);
 	--font-main: var(--font-family);
 	--font-mono: var(--font-family);
+	--font-pixel: 'VT323', monospace;
 
 	/* Theme-specific font settings */
 	--win95-font-size: 1em;
@@ -38,22 +57,8 @@
 	--retro-font-size: 1.1em;
 	--retro-letter-spacing: 0.5px;
 
-	/* Common measurements */
 	--border-width: 2px;
 	--button-padding: 6px 12px;
-}
-
-/* Font loading optimization */
-.font-loaded {
-	font-display: swap;
-}
-
-/* Optimize font loading for different themes */
-.theme-win95,
-.theme-mac-os-9,
-.theme-web-1999,
-.theme-dark-retro {
-	font-display: swap;
 }
 
 /* Global Reset */
@@ -78,21 +83,11 @@ body {
 	font-weight: 500;
 }
 
-.theme-win95 .retro-window-title {
-	font-weight: normal;
-	letter-spacing: 0.5px;
-}
-
 .theme-mac-os-9 {
 	font-family: var(--font-main);
 	font-size: var(--mac-font-size);
 	letter-spacing: var(--mac-letter-spacing);
 	font-weight: 400;
-}
-
-.theme-mac-os-9 .retro-window-title {
-	font-weight: normal;
-	letter-spacing: 0.3px;
 }
 
 .theme-web-1999 {
@@ -102,41 +97,13 @@ body {
 	font-weight: 400;
 }
 
-.theme-web-1999 .retro-window-title {
-	font-weight: normal;
-	text-transform: uppercase;
-}
-
 .theme-dark-retro {
 	font-family: var(--font-retro);
 	font-size: var(--retro-font-size);
 	letter-spacing: var(--retro-letter-spacing);
 }
 
-.theme-dark-retro .retro-window-title {
-	font-family: var(--font-retro);
-	font-weight: normal;
-	text-transform: uppercase;
-}
-
-.theme-dark-retro .retro-button {
-	text-transform: uppercase;
-	letter-spacing: 1px;
-}
-
-.theme-dark-retro .visitor-counter {
-	font-family: var(--font-retro);
-	font-size: 1.1em;
-	letter-spacing: 1px;
-}
-
-.theme-dark-retro .retro-badge {
-	font-family: var(--font-retro);
-	font-size: 0.7em;
-	letter-spacing: 0.5px;
-}
-
-/* Common Components */
+/* Components */
 .retro-window {
 	background: var(--theme-primary);
 	border: 2px solid;
@@ -151,6 +118,23 @@ body {
 	padding: 2px 4px;
 	font-weight: bold;
 	font-size: 0.95em;
+	border-bottom: 2px solid var(--theme-border);
+}
+
+.retro-window-title-flex {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.retro-window-title span {
+	cursor: pointer;
+	opacity: 0.7;
+	transition: opacity 0.2s;
+}
+
+.retro-window-title span:hover {
+	opacity: 1;
 }
 
 .retro-button {
@@ -174,13 +158,7 @@ body {
 	font-size: 0.95em;
 }
 
-/* Update code font for blog content */
-.blog-content code,
-.blog-content pre {
-	font-family: var(--font-mono);
-}
-
-/* Visitor Counter with Pixel Font */
+/* Visitor Counter */
 .visitor-counter {
 	background: #000;
 	color: #0f0;
@@ -192,7 +170,7 @@ body {
 	letter-spacing: 1px;
 }
 
-/* Retro Badges with Updated Typography */
+/* Retro Badges */
 .retro-badge {
 	display: inline-flex;
 	align-items: center;
@@ -208,43 +186,6 @@ body {
 	text-decoration: none;
 	color: var(--theme-text);
 	letter-spacing: 0.5px;
-}
-
-/* Theme-specific Badge Styles */
-.theme-win95 .retro-badge {
-	font-weight: 400;
-	letter-spacing: 0.2px;
-}
-
-.theme-mac-os-9 .retro-badge {
-	font-weight: 500;
-	letter-spacing: 0.3px;
-}
-
-.theme-web-1999 .retro-badge {
-	font-weight: 600;
-	letter-spacing: 0.5px;
-	text-transform: uppercase;
-}
-
-.theme-dark-retro .retro-badge {
-	font-weight: 500;
-	letter-spacing: 0.5px;
-	text-transform: uppercase;
-}
-
-/* Responsive Typography */
-@media (max-width: 768px) {
-	:root {
-		--win95-font-size: 0.9em;
-		--mac-font-size: 0.95em;
-		--web-font-size: 0.95em;
-		--retro-font-size: 0.9em;
-	}
-
-	.retro-badge {
-		font-size: 0.6em;
-	}
 }
 
 /* Links */
@@ -312,6 +253,13 @@ a:hover {
 /* Dark Retro Theme Overrides */
 .theme-dark-retro {
 	--pixel-shadow: 2px 2px 0 var(--theme-accent);
+	--theme-primary: var(--color-black);
+	--theme-secondary: var(--color-green);
+	--theme-background: var(--color-black);
+	--theme-text: var(--color-green);
+	--theme-link: var(--color-green);
+	--theme-border: var(--color-green);
+	--theme-accent: var(--color-green);
 }
 
 .theme-dark-retro body {
@@ -321,7 +269,7 @@ a:hover {
 
 .theme-dark-retro .retro-window {
 	border-style: solid;
-	border-width: 2px;
+	border-width: var(--border-width);
 	position: relative;
 	box-shadow: var(--pixel-shadow);
 }
@@ -338,9 +286,14 @@ a:hover {
 }
 
 .theme-dark-retro .retro-window-title {
-	text-transform: uppercase;
-	letter-spacing: 1px;
-	text-shadow: var(--pixel-shadow);
+	background: var(--color-black);
+	color: var(--color-green);
+	border-bottom-color: var(--color-green);
+	text-shadow: 0 0 5px var(--color-green);
+}
+
+.theme-dark-retro .retro-window-title span {
+	color: var(--color-green);
 }
 
 .theme-dark-retro .under-construction {
@@ -370,7 +323,7 @@ a:hover {
 }
 
 .theme-dark-retro a::before {
-	content: ' >>';
+	content: ' >';
 	position: absolute;
 	left: -11px;
 	opacity: 0;
@@ -381,8 +334,19 @@ a:hover {
 	opacity: 1;
 }
 
-/* Responsive Design */
+/* Responsive */
 @media (max-width: 768px) {
+	:root {
+		--win95-font-size: 0.9em;
+		--mac-font-size: 0.95em;
+		--web-font-size: 0.95em;
+		--retro-font-size: 0.9em;
+	}
+
+	.retro-badge {
+		font-size: 0.6em;
+	}
+
 	.retro-window {
 		margin: 5px;
 	}

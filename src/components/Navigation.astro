@@ -1,64 +1,112 @@
 ---
+import '../styles/retro.css';
 const navItems = [
-  { href: '/', text: '🏠 Home' },
-  { href: '/blog', text: '📝 Blog' },
-  { href: '/portfolio', text: '💼 Portfolio' },
-  { href: '/about', text: '👤 About Me' },
-  { href: '/contact', text: '📧 Contact' },
+	{ href: '/', text: '🏠 Home' },
+	{ href: '/blog', text: '📝 Blog' },
+	{ href: '/portfolio', text: '💼 Portfolio' },
+	{ href: '/about', text: '👤 About Me' },
+	{ href: '/contact', text: '📧 Contact' },
 ];
 
 const currentPath = new URL(Astro.request.url).pathname;
 ---
 
-<nav class="retro-window nav-container">
-  <div class="retro-window-title">Navigation</div>
-  <div class="nav-content">
-    {
-      navItems.map(({ href, text }) => (
-        <a
-          href={href}
-          class:list={[
-            'nav-link',
-            'retro-button',
-            { active: currentPath === href || (href !== '/' && currentPath.startsWith(href)) }
-          ]}
-        >
-          {text}
-        </a>
-      ))
-    }
-  </div>
+<nav class='retro-window nav-container'>
+	<div class='retro-window-title retro-window-title-flex'>
+		<p>Navigation</p>
+		<span>x</span>
+	</div>
+	<div class='nav-content'>
+		{
+			navItems.map(({ href, text }) => (
+				<a href={href} class:list={['nav-link', 'retro-button', { active: currentPath === href || (href !== '/' && currentPath.startsWith(href)) }]}>
+					{text}
+				</a>
+			))
+		}
+	</div>
 </nav>
 <style>
-  .nav-container {
-    margin-bottom: 20px;
-  }
+	.nav-container {
+		margin-bottom: 20px;
+	}
 
-  .nav-content {
-    padding: 10px;
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-  }
+	.nav-content {
+		padding: 10px;
+		display: flex;
+		gap: 10px;
+		flex-wrap: wrap;
+	}
 
-  .nav-link {
-    text-decoration: none;
-    color: var(--theme-text);
-  }
+	.nav-link {
+		text-decoration: none;
+		color: var(--theme-text);
+	}
 
-  .nav-link.active {
-    background: var(--theme-secondary);
-    color: white;
-    border-color: #404040 #dfdfdf #dfdfdf #404040;
-  }
+	.nav-link.active {
+		background: var(--theme-secondary);
+		color: var(--color-white);
+		border-color: var(--color-border-shadow) var(--color-border) var(--color-border) var(--color-border-shadow);
+	}
 
-  @media (max-width: 768px) {
-    .nav-content {
-      flex-direction: column;
-    }
+	/* Dark Retro Theme Specific Styles */
+	:global(.theme-dark-retro) .nav-container {
+		border-color: var(--color-green);
+		box-shadow: 4px 4px 0 var(--theme-accent);
+	}
 
-    .nav-link {
-      text-align: center;
-    }
-  }
+	:global(.theme-dark-retro) .nav-container .retro-window-title {
+		background: var(--color-black);
+		color: var(--color-green);
+		border-bottom-color: var(--color-green);
+		text-shadow: 0 0 5px var(--color-green);
+	}
+
+	:global(.theme-dark-retro) .nav-link {
+		color: var(--color-green);
+		text-shadow: 0 0 5px var(--color-green);
+	}
+
+	:global(.theme-dark-retro) .nav-link:hover {
+		transform: translateY(-2px);
+		box-shadow: 0 4px 0 var(--color-green);
+	}
+
+	:global(.theme-dark-retro) .nav-link.active {
+		background: var(--color-green);
+		color: var(--color-black);
+		text-shadow: none;
+		border-color: var(--color-green);
+		box-shadow: 0 4px 0 var(--color-green);
+	}
+
+	:global(.theme-dark-retro) .nav-link.active:hover {
+		transform: translateY(2px);
+		box-shadow: none;
+	}
+
+	/* Windows 95 Theme Specific Styles */
+	:global(.theme-win95) .nav-container .retro-window-title {
+		background: var(--color-secondary);
+	}
+
+	/* Mac OS 9 Theme Specific Styles */
+	:global(.theme-mac-os-9) .nav-container .retro-window-title {
+		background: var(--color-accent);
+	}
+
+	/* Web 1999 Theme Specific Styles */
+	:global(.theme-web-1999) .nav-container .retro-window-title {
+		background: linear-gradient(90deg, var(--color-magenta), var(--color-cyan));
+	}
+
+	@media (max-width: 768px) {
+		.nav-content {
+			flex-direction: column;
+		}
+
+		.nav-link {
+			text-align: center;
+		}
+	}
 </style>
