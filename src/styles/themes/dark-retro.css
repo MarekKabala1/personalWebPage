@@ -1,4 +1,4 @@
-:root[data-theme='DarkRetro'] {
+:root.theme-dark-retro {
 	--background-color: #000000;
 	--text-color: #33ff33;
 	--border-color: #33ff33;
@@ -13,16 +13,16 @@
 	--accent-color: #33ff33;
 }
 
-[data-theme='DarkRetro'] .blog-post,
-[data-theme='DarkRetro'] .theme-switcher select,
-[data-theme='DarkRetro'] .visitor-counter {
+.theme-dark-retro .blog-post,
+.theme-dark-retro .theme-switcher select,
+.theme-dark-retro .visitor-counter {
 	border: 2px solid var(--border-color);
 	background: #000000;
 	box-shadow: 0 0 10px var(--accent-color);
 	text-shadow: 0 0 5px var(--accent-color);
 }
 
-[data-theme='DarkRetro'] .retro-button {
+.theme-dark-retro .retro-button {
 	background: #000000;
 	color: var(--accent-color);
 	border: 2px solid var(--accent-color);
@@ -31,14 +31,14 @@
 	transition: all 0.2s ease;
 }
 
-[data-theme='DarkRetro'] .retro-button:hover {
+.theme-dark-retro .retro-button:hover {
 	background: var(--accent-color);
 	color: #000000;
 	box-shadow: 0 0 20px var(--accent-color);
 }
 
 /* CRT effect */
-[data-theme='DarkRetro'] body::before {
+.theme-dark-retro body::before {
 	content: '';
 	position: fixed;
 	top: 0;
@@ -50,12 +50,11 @@
 	z-index: 9999;
 }
 
-/* Glow effect */
-[data-theme='DarkRetro'] * {
+Glow effect .theme-dark-retro * {
 	position: relative;
 }
 
-[data-theme='DarkRetro'] *::after {
+.theme-dark-retro *::after {
 	content: '';
 	position: absolute;
 	top: 0;

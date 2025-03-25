@@ -87,17 +87,12 @@ const currentPath = new URL(Astro.request.url).pathname;
 
 	/* Windows 95 Theme Specific Styles */
 	:global(.theme-win95) .nav-container .retro-window-title {
-		background: var(--color-secondary);
+		background: var(--theme-secondary);
 	}
 
 	/* Mac OS 9 Theme Specific Styles */
 	:global(.theme-mac-os-9) .nav-container .retro-window-title {
-		background: var(--color-accent);
-	}
-
-	/* Web 1999 Theme Specific Styles */
-	:global(.theme-web-1999) .nav-container .retro-window-title {
-		background: linear-gradient(90deg, var(--color-magenta), var(--color-cyan));
+		background: var(--theme-secondary);
 	}
 
 	@media (max-width: 768px) {

@@ -48,12 +48,12 @@
 	--font-pixel: 'VT323', monospace;
 
 	/* Theme-specific font settings */
-	--win95-font-size: 1em;
+	--win95-font-size: 1.05em;
 	--win95-letter-spacing: 0.2px;
 	--mac-font-size: 1.05em;
 	--mac-letter-spacing: 0.5px;
 	--web-font-size: 1.1em;
-	--web-letter-spacing: 0.8px;
+	--web-letter-spacing: 0.3px;
 	--retro-font-size: 1.1em;
 	--retro-letter-spacing: 0.5px;
 
@@ -141,6 +141,7 @@ body {
 	background: var(--theme-primary);
 	border: 2px solid;
 	border-color: var(--theme-border);
+	color: var(--theme-text);
 	padding: 6px 12px;
 	font-family: inherit;
 	font-size: 0.9em;
@@ -148,6 +149,11 @@ body {
 	text-decoration: none;
 	display: inline-block;
 	letter-spacing: inherit;
+}
+.retro-button:hover {
+	transform: translateY(-2px);
+	box-shadow: 0 4px 0 var(--theme-secondary);
+	color: var(--theme-text);
 }
 
 .retro-input {
@@ -195,7 +201,6 @@ a {
 }
 
 a:hover {
-	background-color: var(--theme-link);
 	color: var(--theme-background);
 }
 
@@ -272,17 +277,6 @@ a:hover {
 	border-width: var(--border-width);
 	position: relative;
 	box-shadow: var(--pixel-shadow);
-}
-
-.theme-dark-retro .retro-window::after {
-	content: '';
-	position: absolute;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	background: repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.15) 0px, rgba(0, 0, 0, 0.15) 1px, transparent 1px, transparent 2px);
-	pointer-events: none;
 }
 
 .theme-dark-retro .retro-window-title {

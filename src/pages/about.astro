@@ -1,180 +1,187 @@
 ---
 import RetroLayout from '../layouts/RetroLayout.astro';
+import gorilla from '../image/gorilla.png';
 ---
 
-<RetroLayout title="About Me">
-  <div class="about-container">
-    <div class="retro-window profile-section">
-      <div class="retro-window-title">Who Am I?</div>
-      <div class="profile-content">
-        <div class="profile-image">
-          <img src="/avatar.gif" alt="My Avatar" width="150" height="150" />
-        </div>
-        <div class="profile-text">
-          <h2 class="blink">👋 Hello, World!</h2>
-          <p>
-            I'm a passionate hobbyist web developer who loves combining modern tech with retro aesthetics.
-            When I'm not coding, then you can found Me reading fantasy books.
-          </p>
-        </div>
-      </div>
-    </div>
+<RetroLayout title='About Me'>
+	<div class='about-container'>
+		<div class='retro-window profile-section'>
+			<div class='retro-window-title'>Who Am I?</div>
+			<div class='profile-content'>
+				<div class='profile-image'>
+					<img src={gorilla.src} alt='My Avatar' width='100' height='100' />
+				</div>
+				<div class='profile-text'>
+					<h2 class='blink'>👋 Hello, World!</h2>
+					<p>
+						I'm a passionate hobbyist web developer who loves combining modern tech with retro aesthetics. When I'm not coding, then you can found Me reading
+						fantasy books.
+					</p>
+				</div>
+			</div>
+		</div>
 
-    <div class="retro-window timeline-section">
-      <div class="retro-window-title">My Journey</div>
-      <div class="timeline-content">
-        <div class="timeline-item">
-          <div class="year">2024</div>
-          <div class="event">
-            <h3> Web Developer</h3>
-            <p>Building for fun awesome websites and applications. To solve my issues.</p>
-          </div>
-        </div>
-        <div class="timeline-item">
-          <div class="year">2022</div>
-          <div class="event">
-            <h3>Full Stack</h3>
-            <p>Keep learning new technology to Master Full Stack Development.</p>
-          </div>
-        </div>
-        <div class="timeline-item">
-          <div class="year">2021</div>
-          <div class="event">
-            <h3>Frontend</h3>
-            <p>I always wanted to learn how to program, so in 2021 I started all over again.I started learning C++ but that was boring, and i don`t see any project what i can do, then i look on to the web development and fell in love with it.</p>
-          </div>
-        </div>
-        <div class="timeline-item">
-          <div class="year">2017</div>
-          <div class="event">
-            <h3>Frontend</h3>
-            <p>I started studying at a post-secondary school in the Programming department. But I was one of the few willing to participate and study, they closed my major and unfortunately I was drafted into the army.</p>
-          </div>
-        </div>
-        <div class="timeline-item">
-          <div class="year">2000</div>
-          <div class="event">
-            <h3>Frontend</h3>
-            <p>I create come simple Web Page using Pajaczek editor Created by Polish programer in 1996.</p>
-          </div>
-        </div>
-      </div>
-    </div>
+		<div class='retro-window timeline-section'>
+			<div class='retro-window-title'>My Journey</div>
+			<div class='timeline-content'>
+				<div class='timeline-item'>
+					<div class='year'>2024</div>
+					<div class='event'>
+						<h3>Web Developer</h3>
+						<p>Building for fun awesome websites and applications. To solve my issues.</p>
+					</div>
+				</div>
+				<div class='timeline-item'>
+					<div class='year'>2022</div>
+					<div class='event'>
+						<h3>Full Stack</h3>
+						<p>Keep learning new technology to Master Full Stack Development.</p>
+					</div>
+				</div>
+				<div class='timeline-item'>
+					<div class='year'>2021</div>
+					<div class='event'>
+						<h3>Frontend</h3>
+						<p>
+							I always wanted to learn how to program, so in 2021 I started all over again.I started learning C++ but that was boring, and i don`t see any
+							project what i can do, then i look on to the web development and fell in love with it.
+						</p>
+					</div>
+				</div>
+				<div class='timeline-item'>
+					<div class='year'>2017</div>
+					<div class='event'>
+						<h3>Frontend</h3>
+						<p>
+							I started studying at a post-secondary school in the Programming department. But I was one of the few willing to participate and study, they
+							closed my major and unfortunately I was drafted into the army.
+						</p>
+					</div>
+				</div>
+				<div class='timeline-item'>
+					<div class='year'>2000</div>
+					<div class='event'>
+						<h3>Frontend</h3>
+						<p>I create come simple Web Page using Pajaczek editor Created by Polish programer in 1996.</p>
+					</div>
+				</div>
+			</div>
+		</div>
 
-    <div class="retro-window interests-section">
-      <div class="retro-window-title">My Interests</div>
-      <div class="interests-content">
-        <div class="interest-item">
-          <h3>🏀 Basketball</h3>
-          <p>Playing basketball and in free time watch some games.</p>
-        </div>
-        <div class="interest-item">
-          <h3>🎮 Classic Gaming</h3>
-          <p>Playing some classic video games.</p>
-        </div>
-        <div class="interest-item">
-          <h3>📚 Reading</h3>
-          <p>Reading fantasy book to escape from the every day news.</p>
-        </div>
-      </div>
-    </div>
+		<div class='retro-window interests-section'>
+			<div class='retro-window-title'>My Interests</div>
+			<div class='interests-content'>
+				<div class='interest-item'>
+					<h3>🏀 Basketball</h3>
+					<p>Playing basketball and in free time watch some games.</p>
+				</div>
+				<div class='interest-item'>
+					<h3>🎮 Classic Gaming</h3>
+					<p>Playing some classic video games.</p>
+				</div>
+				<div class='interest-item'>
+					<h3>📚 Reading</h3>
+					<p>Reading fantasy book to escape from the every day news.</p>
+				</div>
+			</div>
+		</div>
 
-    <div class="retro-window fun-facts">
-      <div class="retro-window-title">Fun Facts</div>
-      <div class="facts-content">
-        <ul>
-          <li>My first computer was a Windows 95 machine</li>
-          <li>I still have a working dial-up modem</li>
-          <li>I can write HTML in Notepad with my eyes closed 😂</li>
-        </ul>
-      </div>
-    </div>
-  </div>
+		<div class='retro-window fun-facts'>
+			<div class='retro-window-title'>Fun Facts</div>
+			<div class='facts-content'>
+				<ul>
+					<li>My first computer was a Windows 95 machine</li>
+					<li>I still have a working dial-up modem</li>
+					<li>I can write HTML in Notepad with my eyes closed 😂</li>
+				</ul>
+			</div>
+		</div>
+	</div>
 </RetroLayout>
 
 <style>
-  .about-container {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-  }
+	.about-container {
+		display: flex;
+		flex-direction: column;
+		gap: 20px;
+	}
 
-  .profile-content {
-    padding: 20px;
-    display: flex;
-    gap: 20px;
-    align-items: center;
-  }
+	.profile-content {
+		padding: 20px;
+		display: flex;
+		gap: 20px;
+		align-items: center;
+	}
 
-  .profile-image img {
-    border: 2px solid var(--theme-border);
-    border-radius: 50%;
-  }
+	.profile-image img {
+		border: 2px solid var(--theme-border);
+		border-radius: 50%;
+	}
 
-  .profile-text h2 {
-    margin-bottom: 15px;
-    color: var(--theme-secondary);
-  }
+	.profile-text h2 {
+		margin-bottom: 15px;
+		color: var(--theme-secondary);
+	}
 
-  .timeline-content {
-    padding: 20px;
-  }
+	.timeline-content {
+		padding: 20px;
+	}
 
-  .timeline-item {
-    display: flex;
-    gap: 20px;
-    margin-bottom: 20px;
-  }
+	.timeline-item {
+		display: flex;
+		gap: 20px;
+		margin-bottom: 20px;
+	}
 
-  .year {
-    font-weight: bold;
-    color: var(--theme-secondary);
-    min-width: 60px;
-  }
+	.year {
+		font-weight: bold;
+		color: var(--theme-secondary);
+		min-width: 60px;
+	}
 
-  .event h3 {
-    margin-bottom: 5px;
-  }
+	.event h3 {
+		margin-bottom: 5px;
+	}
 
-  .interests-content {
-    padding: 20px;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 20px;
-  }
+	.interests-content {
+		padding: 20px;
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+		gap: 20px;
+	}
 
-  .interest-item h3 {
-    margin-bottom: 10px;
-    color: var(--theme-secondary);
-  }
+	.interest-item h3 {
+		margin-bottom: 10px;
+		color: var(--theme-secondary);
+	}
 
-  .facts-content {
-    padding: 20px;
-  }
+	.facts-content {
+		padding: 20px;
+	}
 
-  .facts-content ul {
-    list-style-type: '🌟';
-    padding-left: 25px;
-  }
+	.facts-content ul {
+		list-style-type: '🌟';
+		padding-left: 25px;
+	}
 
-  .facts-content li {
-    padding-left: 10px;
-    margin-bottom: 10px;
-  }
+	.facts-content li {
+		padding-left: 10px;
+		margin-bottom: 10px;
+	}
 
-  @media (max-width: 768px) {
-    .profile-content {
-      flex-direction: column;
-      text-align: center;
-    }
+	@media (max-width: 768px) {
+		.profile-content {
+			flex-direction: column;
+			text-align: center;
+		}
 
-    .timeline-item {
-      flex-direction: column;
-      gap: 5px;
-    }
+		.timeline-item {
+			flex-direction: column;
+			gap: 5px;
+		}
 
-    .year {
-      color: var(--theme-secondary);
-    }
-  }
+		.year {
+			color: var(--theme-secondary);
+		}
+	}
 </style>
