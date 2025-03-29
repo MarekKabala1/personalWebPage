@@ -19,12 +19,16 @@ const { title } = Astro.props;
 		<title>{title}</title>
 
 		<link rel='preload' href='https://fonts.googleapis.com/css2?family=VT323&display=swap' as='style' />
-		<link rel='preload' href='/assets/fonts/Chicago.ttf' as='font' type='font/ttf' crossorigin />
+		<link rel='preload' href='/src/assets/fonts/Chicago.ttf' as='font' type='font/ttf' crossorigin />
 
 		<link rel='preload' href='/construction.gif' as='image' />
 		<link rel='preload' href='/favicon.svg' as='image' />
 
 		<link rel='preload' href='/src/styles/retro.css' as='style' />
+		<link rel='preload' href='/src/styles/themes/win95.css' as='style' />
+		<link rel='preload' href='/src/styles/themes/macos9.css' as='style' />
+		<link rel='preload' href='/src/styles/themes/web1999.css' as='style' />
+		<link rel='preload' href='/src/styles/themes/dark-retro.css' as='style' />
 
 		<link rel='icon' type='image/svg+xml' href='/favicon.svg' />
 
@@ -106,12 +110,80 @@ const { title } = Astro.props;
 <script>
 	import { setTheme, getTheme, applyTheme, type RetroTheme } from '../utils/themeManager';
 
+	// Cache for prefetched themes and fonts
+	const prefetchedThemes = new Set<string>();
+	const prefetchedFonts = new Set<string>();
+	const cachedUrls = new Map<string, string>();
+
 	// Initialize theme and attach event listeners
 	function initializeTheme() {
 		const currentTheme = getTheme();
 		applyTheme(currentTheme);
 		updateActiveButton(currentTheme);
 		attachThemeSwitchers();
+	}
+
+	// Function to cache a resource
+	async function cacheResource(url: string, type: 'css' | 'font'): Promise<string> {
+		if (cachedUrls.has(url)) {
+			return cachedUrls.get(url)!;
+		}
+
+		try {
+			const response = await fetch(url);
+			const blob = await response.blob();
+			const blobUrl = URL.createObjectURL(blob);
+			cachedUrls.set(url, blobUrl);
+			return blobUrl;
+		} catch (error) {
+			console.error(`Error caching ${type}:`, error);
+			return url; // Fallback to original URL if caching fails
+		}
+	}
+
+	// Function to cache all theme CSS files
+	async function cacheAllThemeCSS() {
+		const themeFiles = [
+			'/src/styles/retro.css',
+			'/src/styles/themes/win95.css',
+			'/src/styles/themes/macos9.css',
+			'/src/styles/themes/web1999.css',
+			'/src/styles/themes/dark-retro.css',
+		];
+
+		for (const file of themeFiles) {
+			if (!prefetchedThemes.has(file)) {
+				const cachedUrl = await cacheResource(file, 'css');
+				const link = document.createElement('link');
+				link.rel = 'stylesheet';
+				link.href = cachedUrl;
+				document.head.appendChild(link);
+				prefetchedThemes.add(file);
+			}
+		}
+	}
+
+	// Function to cache all fonts
+	async function cacheAllFonts() {
+		const fontFiles = ['/src/assets/fonts/Chicago.ttf'];
+
+		for (const file of fontFiles) {
+			if (!prefetchedFonts.has(file)) {
+				const cachedUrl = await cacheResource(file, 'font');
+				const style = document.createElement('style');
+				style.textContent = `
+					@font-face {
+						font-family: 'Chicago';
+						src: url('${cachedUrl}') format('truetype');
+						font-weight: normal;
+						font-style: normal;
+						font-display: swap;
+					}
+				`;
+				document.head.appendChild(style);
+				prefetchedFonts.add(file);
+			}
+		}
 	}
 
 	function attachThemeSwitchers() {
@@ -131,9 +203,17 @@ const { title } = Astro.props;
 		});
 	}
 
-	document.addEventListener('DOMContentLoaded', initializeTheme);
+	// Initialize everything on page load
+	document.addEventListener('DOMContentLoaded', async () => {
+		await Promise.all([cacheAllThemeCSS(), cacheAllFonts()]);
+		initializeTheme();
+	});
 
-	document.addEventListener('astro:after-swap', initializeTheme);
+	// Re-initialize on Astro page transitions
+	document.addEventListener('astro:after-swap', async () => {
+		await Promise.all([cacheAllThemeCSS(), cacheAllFonts()]);
+		initializeTheme();
+	});
 
 	function updateActiveButton(activeTheme: RetroTheme) {
 		document.querySelectorAll('[data-theme]').forEach((button) => {
@@ -288,8 +368,7 @@ const { title } = Astro.props;
 	/* System fonts */
 	@font-face {
 		font-family: 'Chicago';
-		src: url('/assets/fonts/Chicago.ttf') format('truetype');
-		font-weight: normal;
+		src: url('/src/assets/fonts/Chicago.ttf') format('truetype');
 		font-style: normal;
 		font-display: swap;
 	}
@@ -346,7 +425,7 @@ const { title } = Astro.props;
 	.theme-win95 .retro-button,
 	.theme-mac-os-9 .retro-window-title,
 	.theme-mac-os-9 .retro-button {
-		font-size: 0.9em;
+		font-size: 0.7em;
 	}
 
 	/* Windows 95 theme */
@@ -357,18 +436,20 @@ const { title } = Astro.props;
 	.theme-win95 .retro-window-title,
 	.theme-win95 .retro-button {
 		font-family: var(--font-win95);
-		font-size: 0.9em;
+		font-size: 0.8em;
 	}
 
 	/* Mac OS 9 theme */
 	.theme-mac-os-9 {
 		font-family: var(--font-mac);
+		font-weight: 300;
 	}
 
 	.theme-mac-os-9 .retro-window-title,
 	.theme-mac-os-9 .retro-button {
 		font-family: var(--font-mac);
-		font-size: 0.9em;
+		font-size: 0.7em;
+		font-weight: 100;
 	}
 
 	/* Web 1999 and Dark Retro themes */
