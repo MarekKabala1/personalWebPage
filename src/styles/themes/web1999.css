@@ -1,9 +1,8 @@
-:root[data-theme='Web1999'] {
-	--background-color: #000080;
+:root.theme-web-1999 {
+	--background-color: ##ffffff;
 	--text-color: #ffffff;
 	--border-color: #ffff00;
 	--font-family: 'VT323', monospace;
-	--window-header: linear-gradient(90deg, #ff00ff, #00ffff);
 	--window-header-text: #ffffff;
 	--border-width: 2px;
 	--border-style: ridge;
@@ -13,26 +12,25 @@
 	--accent-color: #ff00ff;
 }
 
-[data-theme='Web1999'] .blog-post,
-[data-theme='Web1999'] .theme-switcher select,
-[data-theme='Web1999'] .visitor-counter {
+.theme-web-1999 .blog-post,
+.theme-web-1999 .theme-switcher select,
+.theme-web-1999 .visitor-counter {
 	border: 2px ridge var(--border-color);
 	background: rgba(0, 0, 0, 0.8);
 	box-shadow: 0 0 10px var(--accent-color);
 }
 
-[data-theme='Web1999'] .retro-button {
-	background: linear-gradient(45deg, #ff00ff, #00ffff);
+.theme-web-1999 .retro-button {
+	background: #ff00ff;
 	color: #ffffff;
-	text-shadow: 2px 2px 0 #000000;
 	border: 2px outset var(--border-color);
 }
 
-[data-theme='Web1999'] .retro-button:hover {
-	background: linear-gradient(45deg, #00ffff, #ff00ff);
+.theme-web-1999 .retro-button:hover {
+	background: var(--border-color);
 }
 
-[data-theme='Web1999'] .retro-button:active {
+.theme-web-1999 .retro-button:active {
 	border-style: inset;
 	background-color: red;
 }

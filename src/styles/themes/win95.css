@@ -1,4 +1,4 @@
-:root[data-theme='Win95'] {
+:root.theme-win95 {
 	--background-color: #c0c0c0;
 	--text-color: #000000;
 	--border-color: #ffffff;
@@ -13,9 +13,9 @@
 	--border-style: outset;
 }
 
-[data-theme='Win95'] .blog-post,
-[data-theme='Win95'] .theme-switcher select,
-[data-theme='Win95'] .visitor-counter {
+.theme-win95.blog-post,
+.theme-win95.theme-switcher select,
+.theme-win95.visitor-counter {
 	border: 2px solid;
 	border-color: var(--button-highlight) var(--button-shadow) var(--button-shadow) var(--button-highlight);
 	box-shadow: 1px 1px 0 0 #000000;
