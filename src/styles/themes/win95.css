@@ -1,8 +1,8 @@
 :root.theme-win95 {
 	--background-color: #c0c0c0;
 	--text-color: #000000;
-	--border-color: #ffffff;
-	--border-shadow: #808080;
+	--border-color: #dfdfdf;
+	--border-shadow: #404040;
 	--font-family: 'Montserrat', system-ui, -apple-system, sans-serif;
 	--window-header: #000080;
 	--window-header-text: #ffffff;

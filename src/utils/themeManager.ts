@@ -14,7 +14,7 @@ const themeConfigs: Record<RetroTheme, ThemeColors> = {
   'win95': {
     primary: '#c0c0c0',
     secondary: '#000080',
-    background: '#008080',
+    background: '#C0C0C0',
     text: '#000000',
     link: '#0000FF',
     border: '#dfdfdf #404040 #404040 #dfdfdf'
@@ -32,7 +32,7 @@ const themeConfigs: Record<RetroTheme, ThemeColors> = {
     secondary: '#ff00ff',
     background: '#000066',
     text: '#1a1b1c',
-    link: '#00ff00',
+    link: '#61b9e8',
     border: '#ff0000'
   },
   'dark-retro': {

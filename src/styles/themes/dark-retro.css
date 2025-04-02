@@ -1,10 +1,10 @@
 :root.theme-dark-retro {
-	--background-color: #000000;
-	--text-color: #33ff33;
-	--border-color: #33ff33;
+	--background-color: #0f1012;
+	--text-color: #8bac0f;
+	--border-color: #306230;
 	--font-family: 'VT323', monospace;
-	--window-header: #000000;
-	--window-header-text: #33ff33;
+	--window-header: #1a1b1c;
+	--window-header-text: #32a852;
 	--border-width: 2px;
 	--border-style: solid;
 	--button-face: #fff;
@@ -18,26 +18,26 @@
 .theme-dark-retro .visitor-counter {
 	border: 2px solid var(--border-color);
 	background: #000000;
-	box-shadow: 0 0 10px var(--accent-color);
-	text-shadow: 0 0 5px var(--accent-color);
+	box-shadow: 0 0 5px var(--accent-color);
+	text-shadow: 0 0 2px var(--accent-color);
 }
 
 .theme-dark-retro .retro-button {
 	background: #000000;
 	color: var(--accent-color);
 	border: 2px solid var(--accent-color);
-	text-shadow: 0 0 5px var(--accent-color);
-	box-shadow: 0 0 10px rgba(51, 255, 51, 0.3);
+	text-shadow: 0 0 2px var(--accent-color);
+	box-shadow: 0 0 5px rgba(51, 255, 51, 0.2);
 	transition: all 0.2s ease;
 }
 
 .theme-dark-retro .retro-button:hover {
 	background: var(--accent-color);
 	color: #000000;
-	box-shadow: 0 0 20px var(--accent-color);
+	box-shadow: 0 0 10px var(--accent-color);
 }
 
-/* CRT effect */
+/* Optimized CRT effect */
 .theme-dark-retro body::before {
 	content: '';
 	position: fixed;
@@ -45,12 +45,14 @@
 	left: 0;
 	width: 100%;
 	height: 100%;
-	background: repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.15) 1px, transparent 1px, transparent 2px);
+	background: repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1) 1px, transparent 1px, transparent 2px);
 	pointer-events: none;
 	z-index: 9999;
+	opacity: 0.5;
 }
 
-Glow effect .theme-dark-retro * {
+/* Optimized glow effect */
+.theme-dark-retro * {
 	position: relative;
 }
 
@@ -62,6 +64,28 @@ Glow effect .theme-dark-retro * {
 	width: 100%;
 	height: 100%;
 	background: transparent;
-	box-shadow: 0 0 10px rgba(51, 255, 51, 0.2);
+	box-shadow: 0 0 5px rgba(51, 255, 51, 0.1);
 	pointer-events: none;
+	opacity: 0.5;
+}
+
+/* Performance optimizations */
+.theme-dark-retro {
+	will-change: transform;
+	transform: translateZ(0);
+}
+
+.theme-dark-retro * {
+	backface-visibility: hidden;
+}
+
+/* Reduce motion */
+@media (prefers-reduced-motion: reduce) {
+	.theme-dark-retro body::before {
+		display: none;
+	}
+
+	.theme-dark-retro *::after {
+		display: none;
+	}
 }
