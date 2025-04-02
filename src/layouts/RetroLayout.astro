@@ -16,29 +16,24 @@ const { title } = Astro.props;
 	<head>
 		<meta charset='UTF-8' />
 		<meta name='viewport' content='width=device-width, initial-scale=1.0' />
+		<meta
+			name='description'
+			content='A retro-styled personal blog showcasing web development, React Native, and nostalgic 90s web design. Explore my journey in web and mobile development.'
+		/>
 		<title>{title}</title>
-
-		<link rel='preload' href='https://fonts.googleapis.com/css2?family=VT323&display=swap' as='style' />
-		<link rel='preload' href='/src/assets/fonts/Chicago.ttf' as='font' type='font/ttf' crossorigin />
-
-		<link rel='preload' href='/construction.gif' as='image' />
-		<link rel='preload' href='/favicon.svg' as='image' />
-
-		<link rel='preload' href='/src/styles/retro.css' as='style' />
-		<link rel='preload' href='/src/styles/themes/win95.css' as='style' />
-		<link rel='preload' href='/src/styles/themes/macos9.css' as='style' />
-		<link rel='preload' href='/src/styles/themes/web1999.css' as='style' />
-		<link rel='preload' href='/src/styles/themes/dark-retro.css' as='style' />
-
-		<link rel='icon' type='image/svg+xml' href='/favicon.svg' />
 
 		<link rel='preconnect' href='https://fonts.googleapis.com' />
 		<link rel='preconnect' href='https://fonts.gstatic.com' crossorigin />
-		<link href='https://fonts.googleapis.com/css2?family=VT323&display=swap' rel='stylesheet' media='print' onload="this.media='all'" />
 
-		<noscript>
-			<link href='https://fonts.googleapis.com/css2?family=VT323&display=swap' rel='stylesheet' />
-		</noscript>
+		<link rel='preload' href='/src/styles/retro.css' as='style' />
+		<link rel='preload' href='/src/styles/themes/win95.css' as='style' />
+		<link rel='preload' href='/construction.gif' as='image' />
+
+		<link href='https://fonts.googleapis.com/css2?family=VT323&display=swap' rel='stylesheet' media='print' onload="this.media='all'" />
+		<link rel='stylesheet' href='/src/styles/retro.css' />
+		<link rel='stylesheet' href='/src/styles/themes/win95.css' />
+
+		<link rel='icon' type='image/svg+xml' href='/favicon.svg' />
 
 		<ClientRouter />
 	</head>
@@ -64,10 +59,10 @@ const { title } = Astro.props;
 					<span>x</span>
 				</div>
 				<div class='construction-wrapper'>
-					<div class='blink under-construction'>
+					<div class='blink under-construction hidden'>
 						🚧 UNDER<br />CONSTRUCTION
 					</div>
-					<div class='blink under-construction'>
+					<div class='blink under-construction hidden'>
 						🚧 UNDER<br />CONSTRUCTION
 					</div>
 					<div class='blink under-construction'>
@@ -96,7 +91,7 @@ const { title } = Astro.props;
 							<div class='retro-badge construction-footer'>
 								🚧 UNDER<br />CONSTRUCTION
 							</div>
-							<a href='#' class='retro-badge webring'>
+							<a href='#' class='retro-badge webring' aria-label='Join our web development community webring'>
 								JOIN OUR<br />WEBRING
 							</a>
 						</div>
@@ -151,40 +146,47 @@ const { title } = Astro.props;
 			'/src/styles/themes/dark-retro.css',
 		];
 
-		for (const file of themeFiles) {
-			if (!prefetchedThemes.has(file)) {
-				const cachedUrl = await cacheResource(file, 'css');
-				const link = document.createElement('link');
-				link.rel = 'stylesheet';
-				link.href = cachedUrl;
-				document.head.appendChild(link);
-				prefetchedThemes.add(file);
-			}
-		}
+		await Promise.all(
+			themeFiles.map(async (file) => {
+				if (!prefetchedThemes.has(file)) {
+					const cachedUrl = await cacheResource(file, 'css');
+					const link = document.createElement('link');
+					link.rel = 'stylesheet';
+					link.href = cachedUrl;
+					document.head.appendChild(link);
+					prefetchedThemes.add(file);
+				}
+			})
+		);
 	}
 
 	// Function to cache all fonts
 	async function cacheAllFonts() {
 		const fontFiles = ['/src/assets/fonts/Chicago.ttf'];
 
-		for (const file of fontFiles) {
-			if (!prefetchedFonts.has(file)) {
-				const cachedUrl = await cacheResource(file, 'font');
-				const style = document.createElement('style');
-				style.textContent = `
-					@font-face {
-						font-family: 'Chicago';
-						src: url('${cachedUrl}') format('truetype');
-						font-weight: normal;
-						font-style: normal;
-						font-display: swap;
-					}
-				`;
-				document.head.appendChild(style);
-				prefetchedFonts.add(file);
-			}
-		}
+		await Promise.all(
+			fontFiles.map(async (file) => {
+				if (!prefetchedFonts.has(file)) {
+					const cachedUrl = await cacheResource(file, 'font');
+					const style = document.createElement('style');
+					style.textContent = `
+						@font-face {
+							font-family: 'Chicago';
+							src: url('${cachedUrl}') format('truetype');
+							font-weight: normal;
+							font-style: normal;
+							font-display: swap;
+						}
+					`;
+					document.head.appendChild(style);
+					prefetchedFonts.add(file);
+				}
+			})
+		);
 	}
+
+	// Store event listeners for cleanup
+	const eventListeners = new Set<{ element: Element; type: string; listener: EventListener }>();
 
 	function attachThemeSwitchers() {
 		document.querySelectorAll('[data-theme]').forEach((button) => {
@@ -192,14 +194,29 @@ const { title } = Astro.props;
 
 			const freshButton = document.querySelector(`[data-theme="${button.getAttribute('data-theme')}"]`);
 			if (freshButton) {
-				freshButton.addEventListener('click', (e) => {
+				const listener = (e: Event) => {
 					const theme = (e.target as HTMLElement).dataset.theme as RetroTheme;
 					if (theme) {
 						setTheme(theme);
 						updateActiveButton(theme);
 					}
-				});
+				};
+				freshButton.addEventListener('click', listener);
+				eventListeners.add({ element: freshButton, type: 'click', listener });
 			}
+		});
+	}
+
+	function cleanupEventListeners() {
+		eventListeners.forEach(({ element, type, listener }) => {
+			element.removeEventListener(type, listener);
+		});
+		eventListeners.clear();
+	}
+
+	function updateActiveButton(activeTheme: RetroTheme) {
+		document.querySelectorAll('[data-theme]').forEach((button) => {
+			button.setAttribute('data-active', (button.getAttribute('data-theme') === activeTheme).toString());
 		});
 	}
 
@@ -209,25 +226,36 @@ const { title } = Astro.props;
 		initializeTheme();
 	});
 
+	// Handle bfcache events
+	window.addEventListener('pageshow', (event) => {
+		if (event.persisted) {
+			// Page was restored from bfcache
+			initializeTheme();
+		}
+	});
+
+	// Clean up on page hide
+	window.addEventListener('pagehide', () => {
+		cleanupEventListeners();
+	});
+
 	// Re-initialize on Astro page transitions
 	document.addEventListener('astro:after-swap', async () => {
+		cleanupEventListeners();
 		await Promise.all([cacheAllThemeCSS(), cacheAllFonts()]);
 		initializeTheme();
 	});
 
-	function updateActiveButton(activeTheme: RetroTheme) {
-		document.querySelectorAll('[data-theme]').forEach((button) => {
-			button.setAttribute('data-active', (button.getAttribute('data-theme') === activeTheme).toString());
-		});
-	}
-
-	// Simple visitor counter
-	const visitorCount = localStorage.getItem('visitorCount') || '0';
-	const newCount = parseInt(visitorCount) + 1;
-	localStorage.setItem('visitorCount', newCount.toString());
-	const counterElement = document.getElementById('visitorCount');
-	if (counterElement) {
-		counterElement.textContent = newCount.toString();
+	// Simple visitor counter - only update if not restored from bfcache
+	const navigationEntry = window.performance.getEntriesByType('navigation')[0] as PerformanceNavigationTiming;
+	if (!navigationEntry?.type?.includes('back_forward')) {
+		const visitorCount = localStorage.getItem('visitorCount') || '0';
+		const newCount = parseInt(visitorCount) + 1;
+		localStorage.setItem('visitorCount', newCount.toString());
+		const counterElement = document.getElementById('visitorCount');
+		if (counterElement) {
+			counterElement.textContent = newCount.toString();
+		}
 	}
 </script>
 
@@ -355,6 +383,13 @@ const { title } = Astro.props;
 		.theme-buttons {
 			flex-direction: column;
 		}
+		.hidden {
+			display: none;
+		}
+	.construction-wrapper {
+		display: flex;
+		flex-direction: column;
+	}
 
 		:global(.theme-dark-retro) {
 			font-size: 0.9em;
