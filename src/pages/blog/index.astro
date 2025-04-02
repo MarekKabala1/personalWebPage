@@ -3,11 +3,9 @@ import { Image } from 'astro:assets';
 import RetroLayout from '../../layouts/RetroLayout.astro';
 import { getCollection } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
-import reactToReactNative from '../../image/React.png';
 
 type BlogPost = CollectionEntry<'blog'>;
 
-// Get all blog posts and sort them by date
 const allPosts = await getCollection('blog');
 
 const sortedPosts = (allPosts as BlogPost[]).sort((a, b) => new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime());
@@ -31,10 +29,19 @@ const sortedPosts = (allPosts as BlogPost[]).sort((a, b) => new Date(b.data.pubD
 							<div class='post-date'>
 								<small>📅 {new Date(post.data.pubDate).toLocaleDateString()}</small>
 							</div>
-							<div class='post-image'>
+							<div >
 								{post.data.banner ? (
-									<div class='post-image'>
-										<Image src={post.data.banner} alt={post.data.alt || 'Blog post image'} width={400} height={200} />
+									<div class='post-image-wrapper'>
+										<Image
+											src={post.data.banner}
+											class='post-image'
+											loading={sortedPosts.indexOf(post) === 0 ? 'eager' : 'lazy'}
+											alt={post.data.alt || 'Blog post image'}
+											width={400}
+											height={225}
+											style={{ aspectRatio: 'auto' }}
+											decoding={sortedPosts.indexOf(post) === 0 ? 'sync' : 'async'}
+										/>
 									</div>
 								) : null}
 							</div>
@@ -92,5 +99,14 @@ const sortedPosts = (allPosts as BlogPost[]).sort((a, b) => new Date(b.data.pubD
 
 	.post-link {
 		text-align: right;
+	}
+	@media (max-width: 768px) {
+		.blog-list {
+			grid-template-columns: 1fr;
+		}
+		.post-image{
+			width: 100%;
+			height: auto;
+		}
 	}
 </style>

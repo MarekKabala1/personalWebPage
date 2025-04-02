@@ -27,7 +27,9 @@ const sortedPosts = (allPosts as BlogPost[]).sort((a, b) => new Date(b.data.pubD
 							) : (
 								sortedPosts.map((post) => (
 									<li>
-										<a href='#'>{post.data.title}</a>
+										<a href={`/blog/${post.slug}`} rel='prefetch'>
+											{post.data.title}
+										</a>
 									</li>
 								))
 							)
@@ -44,7 +46,7 @@ const sortedPosts = (allPosts as BlogPost[]).sort((a, b) => new Date(b.data.pubD
 						the 90s internet.
 					</p>
 					<div style='display:flex;justify-content: flex-end; '>
-						<a class='retro-button' style={'color: var(--theme-text);  text-align: right; '} href='/about'> Check out </a>
+						<a class='retro-button' style={'color: var(--theme-text);  text-align: right; '} href='/about' rel='prefetch'> Check out </a>
 					</div>
 				</div>
 			</div>
@@ -63,50 +65,51 @@ const sortedPosts = (allPosts as BlogPost[]).sort((a, b) => new Date(b.data.pubD
 		</div>
 
 		<script>
-			// Simple guestbook functionality using localStorage
-			const form = document.getElementById('guestbook-form') as HTMLFormElement;
-			const entriesDiv = document.getElementById('guestbook-entries');
+			document.addEventListener('DOMContentLoaded', () => {
+				const form = document.getElementById('guestbook-form') as HTMLFormElement;
+				const entriesDiv = document.getElementById('guestbook-entries');
 
-			if (form && entriesDiv) {
-				const entries = JSON.parse(localStorage.getItem('guestbookEntries') || '[]');
+				if (form && entriesDiv) {
+					const entries = JSON.parse(localStorage.getItem('guestbookEntries') || '[]');
 
-				// Display existing entries
-				entries.forEach((entry: { name: string; message: string; date: string }) => {
-					const entryElement = document.createElement('div');
-					entryElement.className = 'guestbook-entry';
-					entryElement.innerHTML = `
-          <strong>${entry.name}</strong> - ${entry.date}<br>
-          ${entry.message}
-        `;
-					entriesDiv.appendChild(entryElement);
-				});
+					// Display existing entries
+					entries.forEach((entry: { name: string; message: string; date: string }) => {
+						const entryElement = document.createElement('div');
+						entryElement.className = 'guestbook-entry';
+						entryElement.innerHTML = `
+							<strong>${entry.name}</strong> - ${entry.date}<br>
+							${entry.message}
+						`;
+						entriesDiv.appendChild(entryElement);
+					});
 
-				// Handle new entries
-				form.addEventListener('submit', (e) => {
-					e.preventDefault();
-					const nameInput = form.elements[0] as HTMLInputElement;
-					const messageInput = form.elements[1] as HTMLTextAreaElement;
+					// Handle new entries
+					form.addEventListener('submit', (e) => {
+						e.preventDefault();
+						const nameInput = form.elements[0] as HTMLInputElement;
+						const messageInput = form.elements[1] as HTMLTextAreaElement;
 
-					const newEntry = {
-						name: nameInput.value,
-						message: messageInput.value,
-						date: new Date().toLocaleDateString(),
-					};
+						const newEntry = {
+							name: nameInput.value,
+							message: messageInput.value,
+							date: new Date().toLocaleDateString(),
+						};
 
-					entries.unshift(newEntry);
-					localStorage.setItem('guestbookEntries', JSON.stringify(entries));
+						entries.unshift(newEntry);
+						localStorage.setItem('guestbookEntries', JSON.stringify(entries));
 
-					const entryElement = document.createElement('div');
-					entryElement.className = 'guestbook-entry';
-					entryElement.innerHTML = `
-          <strong>${newEntry.name}</strong> - ${newEntry.date}<br>
-          ${newEntry.message}
-        `;
-					entriesDiv.insertBefore(entryElement, entriesDiv.firstChild);
+						const entryElement = document.createElement('div');
+						entryElement.className = 'guestbook-entry';
+						entryElement.innerHTML = `
+							<strong>${newEntry.name}</strong> - ${newEntry.date}<br>
+							${newEntry.message}
+						`;
+						entriesDiv.insertBefore(entryElement, entriesDiv.firstChild);
 
-					form.reset();
-				});
-			}
+						form.reset();
+					});
+				}
+			});
 		</script>
 	</main>
 </RetroLayout>
