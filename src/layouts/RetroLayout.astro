@@ -1,5 +1,9 @@
 ---
 import '../styles/retro.css';
+import '../styles/themes/win95.css';
+import '../styles/themes/macos9.css';
+import '../styles/themes/web1999.css';
+import '../styles/themes/dark-retro.css';
 import type { RetroTheme } from '../utils/themeManager';
 import Navigation from '../components/Navigation.astro';
 import { ClientRouter } from 'astro:transitions';
@@ -25,13 +29,9 @@ const { title } = Astro.props;
 		<link rel='preconnect' href='https://fonts.googleapis.com' />
 		<link rel='preconnect' href='https://fonts.gstatic.com' crossorigin />
 
-		<link rel='preload' href='/src/styles/retro.css' as='style' />
-		<link rel='preload' href='/src/styles/themes/win95.css' as='style' />
 		<link rel='preload' href='/construction.gif' as='image' />
 
 		<link href='https://fonts.googleapis.com/css2?family=VT323&display=swap' rel='stylesheet' media='print' onload="this.media='all'" />
-		<link rel='stylesheet' href='/src/styles/retro.css' />
-		<link rel='stylesheet' href='/src/styles/themes/win95.css' />
 
 		<link rel='icon' type='image/svg+xml' href='/favicon.svg' />
 
@@ -105,8 +105,7 @@ const { title } = Astro.props;
 <script>
 	import { setTheme, getTheme, applyTheme, type RetroTheme } from '../utils/themeManager';
 
-	// Cache for prefetched themes and fonts
-	const prefetchedThemes = new Set<string>();
+	// Cache for prefetched fonts
 	const prefetchedFonts = new Set<string>();
 	const cachedUrls = new Map<string, string>();
 
@@ -119,7 +118,7 @@ const { title } = Astro.props;
 	}
 
 	// Function to cache a resource
-	async function cacheResource(url: string, type: 'css' | 'font'): Promise<string> {
+	async function cacheResource(url: string, type: 'font'): Promise<string> {
 		if (cachedUrls.has(url)) {
 			return cachedUrls.get(url)!;
 		}
@@ -136,33 +135,9 @@ const { title } = Astro.props;
 		}
 	}
 
-	// Function to cache all theme CSS files
-	async function cacheAllThemeCSS() {
-		const themeFiles = [
-			'/src/styles/retro.css',
-			'/src/styles/themes/win95.css',
-			'/src/styles/themes/macos9.css',
-			'/src/styles/themes/web1999.css',
-			'/src/styles/themes/dark-retro.css',
-		];
-
-		await Promise.all(
-			themeFiles.map(async (file) => {
-				if (!prefetchedThemes.has(file)) {
-					const cachedUrl = await cacheResource(file, 'css');
-					const link = document.createElement('link');
-					link.rel = 'stylesheet';
-					link.href = cachedUrl;
-					document.head.appendChild(link);
-					prefetchedThemes.add(file);
-				}
-			})
-		);
-	}
-
 	// Function to cache all fonts
 	async function cacheAllFonts() {
-		const fontFiles = ['/src/assets/fonts/Chicago.ttf'];
+		const fontFiles = ['/assets/fonts/Chicago.ttf'];
 
 		await Promise.all(
 			fontFiles.map(async (file) => {
@@ -222,7 +197,7 @@ const { title } = Astro.props;
 
 	// Initialize everything on page load
 	document.addEventListener('DOMContentLoaded', async () => {
-		await Promise.all([cacheAllThemeCSS(), cacheAllFonts()]);
+		await cacheAllFonts();
 		initializeTheme();
 	});
 
@@ -242,7 +217,7 @@ const { title } = Astro.props;
 	// Re-initialize on Astro page transitions
 	document.addEventListener('astro:after-swap', async () => {
 		cleanupEventListeners();
-		await Promise.all([cacheAllThemeCSS(), cacheAllFonts()]);
+		await cacheAllFonts();
 		initializeTheme();
 	});
 
@@ -386,10 +361,10 @@ const { title } = Astro.props;
 		.hidden {
 			display: none;
 		}
-	.construction-wrapper {
-		display: flex;
-		flex-direction: column;
-	}
+		.construction-wrapper {
+			display: flex;
+			flex-direction: column;
+		}
 
 		:global(.theme-dark-retro) {
 			font-size: 0.9em;
@@ -403,7 +378,7 @@ const { title } = Astro.props;
 	/* System fonts */
 	@font-face {
 		font-family: 'Chicago';
-		src: url('/src/assets/fonts/Chicago.ttf') format('truetype');
+		src: url('/assets/fonts/Chicago.ttf') format('truetype');
 		font-style: normal;
 		font-display: swap;
 	}
