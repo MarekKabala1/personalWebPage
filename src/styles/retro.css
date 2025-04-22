@@ -201,7 +201,7 @@ a {
 }
 
 a:hover {
-	color: var(--theme-background);
+	color: var(--theme-accent);
 }
 
 /* Animations */

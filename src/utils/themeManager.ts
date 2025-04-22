@@ -17,7 +17,8 @@ const themeConfigs: Record<RetroTheme, ThemeColors> = {
     background: '#C0C0C0',
     text: '#000000',
     link: '#0000FF',
-    border: '#dfdfdf #404040 #404040 #dfdfdf'
+    border: '#dfdfdf #404040 #404040 #dfdfdf',
+    accent: '#a0a0a0',
   },
   'mac-os-9': {
     primary: "#d4d4d4",
@@ -25,7 +26,8 @@ const themeConfigs: Record<RetroTheme, ThemeColors> = {
     background: "#ffffff",
     text: "#000000",
     link: "#0000ee",
-    border: "#000000"
+    border: "#000000",
+    accent: '#3875d7',
   },
   'web-1999': {
     primary: '#ffff00',
@@ -33,7 +35,8 @@ const themeConfigs: Record<RetroTheme, ThemeColors> = {
     background: '#000066',
     text: '#1a1b1c',
     link: '#61b9e8',
-    border: '#ff0000'
+    border: '#ff0000',
+    accent: '#0099cc',
   },
   'dark-retro': {
     primary: '#1a1b1c',
