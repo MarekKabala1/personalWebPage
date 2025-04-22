@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import RetroLayout from '../../layouts/RetroLayout.astro';
 import type { CollectionEntry } from 'astro:content';
+import { Image } from 'astro:assets';
 
 type BlogPost = CollectionEntry<'blog'>;
 
@@ -25,8 +26,26 @@ const formattedDate = new Date(post.data.pubDate).toLocaleDateString();
 <RetroLayout title={post.data.title}>
 	<article class='blog-post'>
 		<header class='post-header'>
-			<h1 class='post-title'>{post.data.title}</h1>
-			<time datetime={post.data.pubDate.toString()}>📅 {formattedDate}</time>
+			<div class="post-header-info">
+				<p> <span>Author:</span> {post.data.author ? post.data.author : null}</p>
+				<time datetime={post.data.pubDate.toString()}><span>Published:</span> 📅 {formattedDate}</time>
+			</div>
+			<div class="post-title-wrapper">
+				<h1 class='post-title'>{post.data.title}</h1>
+				{post.data.banner ? (
+					<div class='post-image-wrapper'>
+						<Image
+							src={post.data.banner}
+							class='post-image'
+							loading={ 'lazy'}
+							alt={post.data.alt || 'Blog post image'}
+							width={600}
+							height={325}
+							style={{ aspectRatio: 'auto' }}
+						/>
+					</div>
+				) : null}
+			</div>
 		</header>
 		<main class='post-content'>
 			<div class='content-wrapper'>
@@ -34,7 +53,7 @@ const formattedDate = new Date(post.data.pubDate).toLocaleDateString();
 			</div>
 		</main>
 		<footer class='post-footer'>
-			<a href='/blog' class='retro-button'>⬅️ Back to Blog</a>
+			<a href='/blog' class='retro-button'>⬅️ Back to Blogs</a>
 		</footer>
 	</article>
 </RetroLayout>
@@ -51,24 +70,42 @@ const formattedDate = new Date(post.data.pubDate).toLocaleDateString();
 	}
 
 	.post-header {
-		margin-bottom: 2rem;
-		padding-bottom: 1rem;
 		border-bottom: 1px solid var(--theme-border);
 		flex-shrink: 0;
 	}
 
-	.post-title {
-		font-size: 2em;
-		margin: 0 0 0.5rem;
-		color: var(--theme-secondary);
-		min-height: 1.2em;
-	}
+	.post-header-info{
+		border-bottom: 2px solid var(--theme-secondary);
+		margin-bottom: 1rem;
 
+		span{
+			font-weight: bold;
+		}
+		p{
+		 color: var(--theme-secondary);
+		}
+	}
 	.post-header time {
 		color: var(--theme-secondary);
 		font-size: 0.9em;
 		display: block;
 		min-height: 1.2em;
+	}
+	.post-title-wrapper{
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		gap: 1rem;
+	}
+
+	.post-title {
+		font-size: 1.8em;
+		color: var(--theme-secondary);
+		min-height: 1.2em;
+	}
+	.post-image-wrapper {
+		text-align: center;
 	}
 
 	.post-content {
