@@ -80,6 +80,7 @@ const sortedPosts = (allPosts as BlogPost[]).sort((a, b) => new Date(b.data.pubD
 				e.preventDefault();
 				const formData = new FormData(form);
 				const { error } = await actions.guestForm(formData as GuestFormData);
+				form.reset();
 			});
 		</script>
 	</main>
