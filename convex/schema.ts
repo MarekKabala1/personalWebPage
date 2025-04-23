@@ -32,8 +32,6 @@ export default defineSchema({
     name: v.string(),
     message: v.string(),
     createdAt: v.number(),
-    isApproved: v.boolean(),
-    website: v.optional(v.string()),
     email: v.optional(v.string()),
   }).index("by_date", ["createdAt"]),
 });
