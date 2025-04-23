@@ -1,6 +1,7 @@
 ---
 import { getCollection, type CollectionEntry } from 'astro:content';
 import RetroLayout from '../layouts/RetroLayout.astro';
+import { actions } from 'astro:actions';
 
 type BlogPost = CollectionEntry<'blog'>;
 const allPosts = await getCollection('blog');
@@ -54,9 +55,10 @@ const sortedPosts = (allPosts as BlogPost[]).sort((a, b) => new Date(b.data.pubD
 			<div class='retro-window' style='margin-top: 20px;'>
 				<div class='retro-window-title'>Sign My Guestbook!</div>
 				<div style='padding: 10px;'>
-					<form id='guestbook-form' style='display: flex; flex-direction: column; gap: 10px;'>
-						<input type='text' class='retro-input' placeholder='Your Name' required />
-						<textarea class='retro-input' placeholder='Your Message' rows='3' required></textarea>
+					<form id='guestbook-form' method='POST' action={actions.guestForm} style='display: flex; flex-direction: column; gap: 10px;'>
+						<input type='text' name='name' class='retro-input' placeholder='Your Name' required />
+						<input type='email' name='email' class='retro-input' placeholder='Email Address not required' />
+						<textarea class='retro-input' name='message' placeholder='Your Message' rows='3' required></textarea>
 						<button type='submit' class='retro-button'>Submit</button>
 					</form>
 					<div id='guestbook-entries' style='margin-top: 20px;'></div>
@@ -65,50 +67,19 @@ const sortedPosts = (allPosts as BlogPost[]).sort((a, b) => new Date(b.data.pubD
 		</div>
 
 		<script>
-			document.addEventListener('DOMContentLoaded', () => {
-				const form = document.getElementById('guestbook-form') as HTMLFormElement;
-				const entriesDiv = document.getElementById('guestbook-entries');
+			import { actions } from 'astro:actions';
 
-				if (form && entriesDiv) {
-					const entries = JSON.parse(localStorage.getItem('guestbookEntries') || '[]');
+			interface GuestFormData extends FormData {
+				name: string;
+				email: string;
+				message: string;
+			}
 
-					// Display existing entries
-					entries.forEach((entry: { name: string; message: string; date: string }) => {
-						const entryElement = document.createElement('div');
-						entryElement.className = 'guestbook-entry';
-						entryElement.innerHTML = `
-							<strong>${entry.name}</strong> - ${entry.date}<br>
-							${entry.message}
-						`;
-						entriesDiv.appendChild(entryElement);
-					});
-
-					// Handle new entries
-					form.addEventListener('submit', (e) => {
-						e.preventDefault();
-						const nameInput = form.elements[0] as HTMLInputElement;
-						const messageInput = form.elements[1] as HTMLTextAreaElement;
-
-						const newEntry = {
-							name: nameInput.value,
-							message: messageInput.value,
-							date: new Date().toLocaleDateString(),
-						};
-
-						entries.unshift(newEntry);
-						localStorage.setItem('guestbookEntries', JSON.stringify(entries));
-
-						const entryElement = document.createElement('div');
-						entryElement.className = 'guestbook-entry';
-						entryElement.innerHTML = `
-							<strong>${newEntry.name}</strong> - ${newEntry.date}<br>
-							${newEntry.message}
-						`;
-						entriesDiv.insertBefore(entryElement, entriesDiv.firstChild);
-
-						form.reset();
-					});
-				}
+			const form = document.querySelector('form');
+			form?.addEventListener('submit', async (e) => {
+				e.preventDefault();
+				const formData = new FormData(form);
+				const { error } = await actions.guestForm(formData as GuestFormData);
 			});
 		</script>
 	</main>
