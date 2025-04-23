@@ -109,7 +109,7 @@ const { title } = Astro.props;
 	const prefetchedFonts = new Set<string>();
 	const cachedUrls = new Map<string, string>();
 
-	// Initialize theme and attach event listeners
+	// Initialize
 	function initializeTheme() {
 		const currentTheme = getTheme();
 		applyTheme(currentTheme);
@@ -117,7 +117,7 @@ const { title } = Astro.props;
 		attachThemeSwitchers();
 	}
 
-	// Function to cache a resource
+	// Cache
 	async function cacheResource(url: string, type: 'font'): Promise<string> {
 		if (cachedUrls.has(url)) {
 			return cachedUrls.get(url)!;
@@ -131,11 +131,11 @@ const { title } = Astro.props;
 			return blobUrl;
 		} catch (error) {
 			console.error(`Error caching ${type}:`, error);
-			return url; // Fallback to original URL if caching fails
+			return url; // Fallback
 		}
 	}
 
-	// Function to cache all fonts
+	// cache fonts
 	async function cacheAllFonts() {
 		const fontFiles = ['/assets/fonts/Chicago.ttf'];
 
@@ -160,7 +160,7 @@ const { title } = Astro.props;
 		);
 	}
 
-	// Store event listeners for cleanup
+	// Store event listeners for cleanup issue witch buttons not working when astro view transition 	implemented
 	const eventListeners = new Set<{ element: Element; type: string; listener: EventListener }>();
 
 	function attachThemeSwitchers() {
@@ -201,10 +201,10 @@ const { title } = Astro.props;
 		initializeTheme();
 	});
 
-	// Handle bfcache events
+	// Handle cache events
 	window.addEventListener('pageshow', (event) => {
 		if (event.persisted) {
-			// Page was restored from bfcache
+			// restored from cache
 			initializeTheme();
 		}
 	});
@@ -221,17 +221,14 @@ const { title } = Astro.props;
 		initializeTheme();
 	});
 
-	// Simple visitor counter - only update if not restored from bfcache
-	const navigationEntry = window.performance.getEntriesByType('navigation')[0] as PerformanceNavigationTiming;
-	if (!navigationEntry?.type?.includes('back_forward')) {
-		const visitorCount = localStorage.getItem('visitorCount') || '0';
-		const newCount = parseInt(visitorCount) + 1;
-		localStorage.setItem('visitorCount', newCount.toString());
-		const counterElement = document.getElementById('visitorCount');
-		if (counterElement) {
-			counterElement.textContent = newCount.toString();
-		}
-	}
+	// VisitorTracker
+
+	import { runVisitorTracker } from '../utils/visitorTracker';
+	import { ConvexClient } from 'convex/browser';
+
+	const convex = new ConvexClient(import.meta.env.PUBLIC_CONVEX_URL);
+
+	runVisitorTracker(convex);
 </script>
 
 <style>
