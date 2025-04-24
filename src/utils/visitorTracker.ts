@@ -10,10 +10,13 @@ export async function runVisitorTracker(convex: ConvexClient, elementId = "visit
     sessionStorage.setItem("site_visit_counted", "true");
     await convex.mutation(api.visitors.incrementVisitorCount, {});
   }
+}
 
-  const data = await convex.query(api.visitors.getVisitorCount, {});
-  const el = document.getElementById(elementId);
-  if (el && data) {
-    el.textContent = data.count.toString();
+export async function getVisitorCount(convex: ConvexClient) {
+  const data = await convex.query(api.visitors.getVisitorCount, {})
+  if (!data) {
+    const count = 0
+    return count.toString()
   }
+  return data.count.toString()
 }

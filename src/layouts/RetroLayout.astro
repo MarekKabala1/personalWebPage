@@ -7,12 +7,16 @@ import '../styles/themes/dark-retro.css';
 import type { RetroTheme } from '../utils/themeManager';
 import Navigation from '../components/Navigation.astro';
 import { ClientRouter } from 'astro:transitions';
+import { getVisitorCount } from '../utils/visitorTracker';
+import { ConvexClient } from 'convex/browser';
 
 interface Props {
 	title: string;
 }
 
 const { title } = Astro.props;
+
+const convex = new ConvexClient(import.meta.env.PUBLIC_CONVEX_URL);
 ---
 
 <!doctype html>
@@ -85,7 +89,7 @@ const { title } = Astro.props;
 
 					<footer class='retro-footer'>
 						<div class='visitor-counter'>
-							Visitors: <span id='visitorCount'>0</span>
+							Visitors: <span id='visitorCount'>{getVisitorCount(convex)}</span>
 						</div>
 						<div class='footer-badges'>
 							<div class='retro-badge construction-footer'>
@@ -145,14 +149,14 @@ const { title } = Astro.props;
 					const cachedUrl = await cacheResource(file, 'font');
 					const style = document.createElement('style');
 					style.textContent = `
-						@font-face {
-							font-family: 'Chicago';
-							src: url('${cachedUrl}') format('truetype');
-							font-weight: normal;
-							font-style: normal;
-							font-display: swap;
-						}
-					`;
+							@font-face {
+								font-family: 'Chicago';
+								src: url('${cachedUrl}') format('truetype');
+								font-weight: normal;
+								font-style: normal;
+								font-display: swap;
+								}
+								`;
 					document.head.appendChild(style);
 					prefetchedFonts.add(file);
 				}
@@ -223,11 +227,10 @@ const { title } = Astro.props;
 
 	// VisitorTracker
 
-	import { runVisitorTracker } from '../utils/visitorTracker';
 	import { ConvexClient } from 'convex/browser';
+	import { runVisitorTracker } from '../utils/visitorTracker';
 
 	const convex = new ConvexClient(import.meta.env.PUBLIC_CONVEX_URL);
-
 	runVisitorTracker(convex);
 </script>
 
