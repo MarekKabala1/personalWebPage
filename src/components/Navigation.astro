@@ -73,11 +73,10 @@ const currentPath = new URL(Astro.request.url).pathname;
 	}
 
 	:global(.theme-dark-retro) .nav-link.active {
-		background: var(--color-green);
+		background: var(--theme-secondary);
 		color: var(--color-black);
 		text-shadow: none;
 		border-color: var(--color-green);
-		box-shadow: 0 4px 0 var(--color-green);
 	}
 
 	:global(.theme-dark-retro) .nav-link.active:hover {
