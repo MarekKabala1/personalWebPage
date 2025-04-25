@@ -1,12 +1,12 @@
 // @ts-check
 import { defineConfig, envField } from 'astro/config';
 import mdx from '@astrojs/mdx';
-
 import react from '@astrojs/react';
+import vercel from '@astrojs/vercel';
 
-// https://astro.build/config
 export default defineConfig({
 	integrations: [mdx(), react()],
+
 	markdown: {
 		shikiConfig: {
 			theme: 'dracula',
@@ -23,4 +23,6 @@ export default defineConfig({
 			}),
 		},
 	},
+	output: 'server',
+	adapter: vercel(),
 });
