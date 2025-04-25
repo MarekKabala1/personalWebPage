@@ -116,8 +116,31 @@ const sortedPosts = (allPosts as BlogPost[]).sort((a, b) => new Date(b.data.pubD
 		text-align: right;
 	}
 	@media (max-width: 768px) {
-		.blog-list {
+		.blog-list:has(.post-item) {
+			display: grid;
 			grid-template-columns: 1fr;
+		}
+		.post-title {
+			display: flex;
+			align-items: center;
+		}
+		.post-content {
+			padding: 15px;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			gap: 1rem;
+
+			.post-date,
+			.post-excerpt {
+				width: 100%;
+				text-align: left;
+			}
+
+			.post-link {
+				width: 100%;
+				text-align: right;
+			}
 		}
 		.post-image {
 			width: 100%;
