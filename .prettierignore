@@ -1,0 +1,10 @@
+node_modules
+dist
+build
+.next
+*.md
+*.svg
+convex
+.cursor
+.vscode
+.astro
