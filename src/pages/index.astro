@@ -2,6 +2,7 @@
 import { getCollection, type CollectionEntry } from 'astro:content';
 import RetroLayout from '../layouts/RetroLayout.astro';
 import { actions } from 'astro:actions';
+import GuestbookEntries from '../components/GuestbookEntries';
 
 type BlogPost = CollectionEntry<'blog'>;
 const allPosts = await getCollection('blog');
@@ -93,7 +94,7 @@ const sortedPosts = (allPosts as BlogPost[])
 							required></textarea>
 						<button type='submit' class='retro-button'>Submit</button>
 					</form>
-					<div id='guestbook-entries' style='margin-top: 20px;'></div>
+					<GuestbookEntries client:load />
 				</div>
 			</div>
 		</div>

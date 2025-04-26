@@ -166,6 +166,11 @@ body {
   font-size: 0.95em;
 }
 
+.guestbook-title {
+  display: flex;
+  justify-content: space-between;
+}
+
 /* Visitor Counter */
 .visitor-counter {
   background: var(--theme-background);
