@@ -13,7 +13,9 @@
 .theme-mac-os-9 .blog-post,
 .theme-mac-os-9 .theme-switcher select,
 .theme-mac-os-9 .visitor-counter {
-	border-radius: 3px;
-	box-shadow: inset 1px 1px 0 #ffffff, 1px 1px 0 #888888;
-	background: var(--button-face);
+  border-radius: 3px;
+  box-shadow:
+    inset 1px 1px 0 #ffffff,
+    1px 1px 0 #888888;
+  background: var(--button-face);
 }

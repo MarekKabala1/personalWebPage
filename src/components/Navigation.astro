@@ -19,7 +19,17 @@ const currentPath = new URL(Astro.request.url).pathname;
 	<div class='nav-content'>
 		{
 			navItems.map(({ href, text }) => (
-				<a href={href} class:list={['nav-link', 'retro-button', { active: currentPath === href || (href !== '/' && currentPath.startsWith(href)) }]}>
+				<a
+					href={href}
+					class:list={[
+						'nav-link',
+						'retro-button',
+						{
+							active:
+								currentPath === href ||
+								(href !== '/' && currentPath.startsWith(href)),
+						},
+					]}>
 					{text}
 				</a>
 			))
@@ -46,7 +56,8 @@ const currentPath = new URL(Astro.request.url).pathname;
 	.nav-link.active {
 		background: var(--theme-secondary);
 		color: var(--color-white);
-		border-color: var(--color-border-shadow) var(--color-border) var(--color-border) var(--color-border-shadow);
+		border-color: var(--color-border-shadow) var(--color-border)
+			var(--color-border) var(--color-border-shadow);
 	}
 
 	/* Dark Retro Theme Specific Styles */

@@ -1,114 +1,121 @@
 ---
 interface Props {
-  postId: string;
+	postId: string;
 }
 
 const { postId } = Astro.props;
 ---
 
-<div class="retro-window comments-section">
-  <div class="retro-window-title">Comments</div>
-  <div class="comments-content">
-    <div class="like-section">
-      <button class="retro-button like-button" data-post-id={postId}>
-        👍 Like <span class="like-count">0</span>
-      </button>
-    </div>
+<div class='retro-window comments-section'>
+	<div class='retro-window-title'>Comments</div>
+	<div class='comments-content'>
+		<div class='like-section'>
+			<button class='retro-button like-button' data-post-id={postId}>
+				👍 Like <span class='like-count'>0</span>
+			</button>
+		</div>
 
-    <form class="comment-form" data-post-id={postId}>
-      <input type="text" class="retro-input" name="name" placeholder="Your Name" required />
-      <textarea
-        class="retro-input comment-textarea"
-        name="comment"
-        placeholder="Your Comment"
-        required
-      ></textarea>
-      <button type="submit" class="retro-button">💬 Add Comment</button>
-    </form>
+		<form class='comment-form' data-post-id={postId}>
+			<input
+				type='text'
+				class='retro-input'
+				name='name'
+				placeholder='Your Name'
+				required
+			/>
+			<textarea
+				class='retro-input comment-textarea'
+				name='comment'
+				placeholder='Your Comment'
+				required></textarea>
+			<button type='submit' class='retro-button'>💬 Add Comment</button>
+		</form>
 
-    <div class="comments-list" data-post-id={postId}></div>
-  </div>
+		<div class='comments-list' data-post-id={postId}></div>
+	</div>
 </div>
 
 <style>
-  .comments-section {
-    margin-top: 20px;
-  }
+	.comments-section {
+		margin-top: 20px;
+	}
 
-  .comments-content {
-    padding: 10px;
-  }
+	.comments-content {
+		padding: 10px;
+	}
 
-  .like-section {
-    text-align: center;
-    margin-bottom: 20px;
-  }
+	.like-section {
+		text-align: center;
+		margin-bottom: 20px;
+	}
 
-  .like-button {
-    min-width: 100px;
-  }
+	.like-button {
+		min-width: 100px;
+	}
 
-  .comment-form {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-bottom: 20px;
-  }
+	.comment-form {
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+		margin-bottom: 20px;
+	}
 
-  .comment-textarea {
-    min-height: 80px;
-    resize: vertical;
-  }
+	.comment-textarea {
+		min-height: 80px;
+		resize: vertical;
+	}
 
-  .comments-list {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
+	.comments-list {
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+	}
 
-  .comment-item {
-    background: white;
-    padding: 10px;
-    border: 2px solid var(--theme-border);
-  }
+	.comment-item {
+		background: white;
+		padding: 10px;
+		border: 2px solid var(--theme-border);
+	}
 
-  .comment-header {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 5px;
-    font-size: 0.9em;
-  }
+	.comment-header {
+		display: flex;
+		justify-content: space-between;
+		margin-bottom: 5px;
+		font-size: 0.9em;
+	}
 
-  .comment-name {
-    font-weight: bold;
-  }
+	.comment-name {
+		font-weight: bold;
+	}
 
-  .comment-date {
-    color: #666;
-  }
+	.comment-date {
+		color: #666;
+	}
 </style>
 
 <script define:vars={{ postId }}>
-  // Load comments and likes from localStorage
-  const storageKey = `blog-${postId}`;
-  const storage = localStorage.getItem(storageKey);
-  const data = storage ? JSON.parse(storage) : { likes: 0, comments: [] };
+	// Load comments and likes from localStorage
+	const storageKey = `blog-${postId}`;
+	const storage = localStorage.getItem(storageKey);
+	const data = storage ? JSON.parse(storage) : { likes: 0, comments: [] };
 
-  // Update like count display
-  const updateLikeCount = () => {
-    const likeCount = document.querySelector('.like-count');
-    if (likeCount) {
-      likeCount.textContent = data.likes.toString();
-    }
-  };
+	// Update like count display
+	const updateLikeCount = () => {
+		const likeCount = document.querySelector('.like-count');
+		if (likeCount) {
+			likeCount.textContent = data.likes.toString();
+		}
+	};
 
-  // Render comments
-  const renderComments = () => {
-    const commentsList = document.querySelector(`.comments-list[data-post-id="${postId}"]`);
-    if (commentsList) {
-      commentsList.innerHTML = data.comments
-        .map(
-          (comment) => `
+	// Render comments
+	const renderComments = () => {
+		const commentsList = document.querySelector(
+			`.comments-list[data-post-id="${postId}"]`,
+		);
+		if (commentsList) {
+			commentsList.innerHTML = data.comments
+				.map(
+					(comment) => `
           <div class="comment-item">
             <div class="comment-header">
               <span class="comment-name">${comment.name}</span>
@@ -116,46 +123,50 @@ const { postId } = Astro.props;
             </div>
             <div class="comment-text">${comment.text}</div>
           </div>
-        `
-        )
-        .join('');
-    }
-  };
+        `,
+				)
+				.join('');
+		}
+	};
 
-  // Save data to localStorage
-  const saveData = () => {
-    localStorage.setItem(storageKey, JSON.stringify(data));
-    updateLikeCount();
-    renderComments();
-  };
+	// Save data to localStorage
+	const saveData = () => {
+		localStorage.setItem(storageKey, JSON.stringify(data));
+		updateLikeCount();
+		renderComments();
+	};
 
-  // Handle likes
-  const likeButton = document.querySelector(`.like-button[data-post-id="${postId}"]`);
-  if (likeButton) {
-    likeButton.addEventListener('click', () => {
-      data.likes++;
-      saveData();
-    });
-  }
+	// Handle likes
+	const likeButton = document.querySelector(
+		`.like-button[data-post-id="${postId}"]`,
+	);
+	if (likeButton) {
+		likeButton.addEventListener('click', () => {
+			data.likes++;
+			saveData();
+		});
+	}
 
-  // Handle new comments
-  const commentForm = document.querySelector(`.comment-form[data-post-id="${postId}"]`);
-  if (commentForm) {
-    commentForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const formData = new FormData(e.target);
-      const comment = {
-        name: formData.get('name'),
-        text: formData.get('comment'),
-        date: new Date().toLocaleDateString(),
-      };
-      data.comments.unshift(comment);
-      saveData();
-      e.target.reset();
-    });
-  }
+	// Handle new comments
+	const commentForm = document.querySelector(
+		`.comment-form[data-post-id="${postId}"]`,
+	);
+	if (commentForm) {
+		commentForm.addEventListener('submit', (e) => {
+			e.preventDefault();
+			const formData = new FormData(e.target);
+			const comment = {
+				name: formData.get('name'),
+				text: formData.get('comment'),
+				date: new Date().toLocaleDateString(),
+			};
+			data.comments.unshift(comment);
+			saveData();
+			e.target.reset();
+		});
+	}
 
-  // Initial render
-  updateLikeCount();
-  renderComments();
+	// Initial render
+	updateLikeCount();
+	renderComments();
 </script>

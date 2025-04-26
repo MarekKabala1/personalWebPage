@@ -6,7 +6,12 @@ import { actions } from 'astro:actions';
 type BlogPost = CollectionEntry<'blog'>;
 const allPosts = await getCollection('blog');
 const maxPostsToShow = 2;
-const sortedPosts = (allPosts as BlogPost[]).sort((a, b) => new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime()).slice(0, maxPostsToShow);
+const sortedPosts = (allPosts as BlogPost[])
+	.sort(
+		(a, b) =>
+			new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime(),
+	)
+	.slice(0, maxPostsToShow);
 ---
 
 <RetroLayout title='My Retro WebPage'>
@@ -43,11 +48,18 @@ const sortedPosts = (allPosts as BlogPost[]).sort((a, b) => new Date(b.data.pubD
 				<div class='retro-window-title'>About Me</div>
 				<div style='padding: 10px; '>
 					<p>
-						Welcome to my corner of the World Wide Web! I'm a construction worker who loves to develop Web Sites and Mobile Apps and like the nostalgic feel of
-						the 90s internet.
+						Welcome to my corner of the World Wide Web! I'm a construction
+						worker who loves to develop Web Sites and Mobile Apps and like the
+						nostalgic feel of the 90s internet.
 					</p>
 					<div style='display:flex;justify-content: flex-end; '>
-						<a class='retro-button' style={'color: var(--theme-text);  text-align: right; '} href='/about' rel='prefetch'> Check out </a>
+						<a
+							class='retro-button'
+							style={'color: var(--theme-text);  text-align: right; '}
+							href='/about'
+							rel='prefetch'>
+							Check out
+						</a>
 					</div>
 				</div>
 			</div>
@@ -55,10 +67,30 @@ const sortedPosts = (allPosts as BlogPost[]).sort((a, b) => new Date(b.data.pubD
 			<div class='retro-window' style='margin-top: 20px;'>
 				<div class='retro-window-title'>Sign My Guestbook!</div>
 				<div style='padding: 10px;'>
-					<form id='guestbook-form' method='POST' action={actions.guestForm} style='display: flex; flex-direction: column; gap: 10px;'>
-						<input type='text' name='name' class='retro-input' placeholder='Your Name' required />
-						<input type='email' name='email' class='retro-input' placeholder='Email Address not required' />
-						<textarea class='retro-input' name='message' placeholder='Your Message' rows='3' required></textarea>
+					<form
+						id='guestbook-form'
+						method='POST'
+						action={actions.guestForm}
+						style='display: flex; flex-direction: column; gap: 10px;'>
+						<input
+							type='text'
+							name='name'
+							class='retro-input'
+							placeholder='Your Name'
+							required
+						/>
+						<input
+							type='email'
+							name='email'
+							class='retro-input'
+							placeholder='Email Address not required'
+						/>
+						<textarea
+							class='retro-input'
+							name='message'
+							placeholder='Your Message'
+							rows='3'
+							required></textarea>
 						<button type='submit' class='retro-button'>Submit</button>
 					</form>
 					<div id='guestbook-entries' style='margin-top: 20px;'></div>

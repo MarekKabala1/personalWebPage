@@ -35,7 +35,12 @@ const convex = new ConvexClient(import.meta.env.PUBLIC_CONVEX_URL);
 
 		<link rel='preload' href='/construction.gif' as='image' />
 
-		<link href='https://fonts.googleapis.com/css2?family=VT323&display=swap' rel='stylesheet' media='print' onload="this.media='all'" />
+		<link
+			href='https://fonts.googleapis.com/css2?family=VT323&display=swap'
+			rel='stylesheet'
+			media='print'
+			onload="this.media='all'"
+		/>
 
 		<link rel='icon' type='image/svg+xml' href='/favicon.svg' />
 
@@ -50,9 +55,13 @@ const convex = new ConvexClient(import.meta.env.PUBLIC_CONVEX_URL);
 				</div>
 				<div class='theme-buttons'>
 					<button class='retro-button' data-theme='win95'>📺 Windows 95</button>
-					<button class='retro-button' data-theme='mac-os-9'>🍎 Mac OS 9</button>
-					<button class='retro-button' data-theme='web-1999'>💾 Web 1999</button>
-					<button class='retro-button' data-theme='dark-retro'>🎮 Dark Retro</button>
+					<button class='retro-button' data-theme='mac-os-9'>🍎 Mac OS 9</button
+					>
+					<button class='retro-button' data-theme='web-1999'>💾 Web 1999</button
+					>
+					<button class='retro-button' data-theme='dark-retro'
+						>🎮 Dark Retro</button
+					>
 				</div>
 			</div>
 
@@ -82,7 +91,10 @@ const convex = new ConvexClient(import.meta.env.PUBLIC_CONVEX_URL);
 				</div>
 				<div class='content-wrapper'>
 					<div class='marquee'>
-						<span>Welcome to my retro website! Thanks for visiting! Don't forget to sign my guestbook!</span>
+						<span
+							>Welcome to my retro website! Thanks for visiting! Don't forget to
+							sign my guestbook!</span
+						>
 					</div>
 
 					<slot />
@@ -95,7 +107,10 @@ const convex = new ConvexClient(import.meta.env.PUBLIC_CONVEX_URL);
 							<div class='retro-badge construction-footer'>
 								🚧 UNDER<br />CONSTRUCTION
 							</div>
-							<a href='#' class='retro-badge webring' aria-label='Join our web development community webring'>
+							<a
+								href='#'
+								class='retro-badge webring'
+								aria-label='Join our web development community webring'>
 								JOIN OUR<br />WEBRING
 							</a>
 						</div>
@@ -107,7 +122,12 @@ const convex = new ConvexClient(import.meta.env.PUBLIC_CONVEX_URL);
 </html>
 
 <script>
-	import { setTheme, getTheme, applyTheme, type RetroTheme } from '../utils/themeManager';
+	import {
+		setTheme,
+		getTheme,
+		applyTheme,
+		type RetroTheme,
+	} from '../utils/themeManager';
 
 	// Cache for prefetched fonts
 	const prefetchedFonts = new Set<string>();
@@ -160,18 +180,24 @@ const convex = new ConvexClient(import.meta.env.PUBLIC_CONVEX_URL);
 					document.head.appendChild(style);
 					prefetchedFonts.add(file);
 				}
-			})
+			}),
 		);
 	}
 
 	// Store event listeners for cleanup issue witch buttons not working when astro view transition 	implemented
-	const eventListeners = new Set<{ element: Element; type: string; listener: EventListener }>();
+	const eventListeners = new Set<{
+		element: Element;
+		type: string;
+		listener: EventListener;
+	}>();
 
 	function attachThemeSwitchers() {
 		document.querySelectorAll('[data-theme]').forEach((button) => {
 			button.replaceWith(button.cloneNode(true));
 
-			const freshButton = document.querySelector(`[data-theme="${button.getAttribute('data-theme')}"]`);
+			const freshButton = document.querySelector(
+				`[data-theme="${button.getAttribute('data-theme')}"]`,
+			);
 			if (freshButton) {
 				const listener = (e: Event) => {
 					const theme = (e.target as HTMLElement).dataset.theme as RetroTheme;
@@ -195,7 +221,10 @@ const convex = new ConvexClient(import.meta.env.PUBLIC_CONVEX_URL);
 
 	function updateActiveButton(activeTheme: RetroTheme) {
 		document.querySelectorAll('[data-theme]').forEach((button) => {
-			button.setAttribute('data-active', (button.getAttribute('data-theme') === activeTheme).toString());
+			button.setAttribute(
+				'data-active',
+				(button.getAttribute('data-theme') === activeTheme).toString(),
+			);
 		});
 	}
 

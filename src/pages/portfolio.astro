@@ -4,7 +4,8 @@ import RetroLayout from '../layouts/RetroLayout.astro';
 const projects = [
 	{
 		title: 'Retro Blog',
-		description: "A nostalgic blog platform built with Astro and styled like it's 1999.",
+		description:
+			"A nostalgic blog platform built with Astro and styled like it's 1999.",
 		tech: ['Astro', 'TypeScript', 'CSS'],
 		image: '',
 		link: 'https://github.com/yourusername/retro-blog',
@@ -25,7 +26,8 @@ const projects = [
 	},
 	{
 		title: 'Pokemon',
-		description: 'An App that connect to the Pokemon Api to check pokemon stats ,and to compare two pokemon ',
+		description:
+			'An App that connect to the Pokemon Api to check pokemon stats ,and to compare two pokemon ',
 		tech: ['React Native', 'Expo', 'Tailwind', 'Zustand', 'Tanstack-query'],
 		image: '',
 		link: 'https://github.com/MarekKabala1/pokiapp',
@@ -49,7 +51,16 @@ const projects = [
 					<div class='retro-window-title'>{project.title}</div>
 					<div class='project-content'>
 						<div class='project-image'>
-							{!project.image ? <div>{project.title}</div> : <img src={project.image} alt={project.title} width='200' height='150' />}
+							{!project.image ? (
+								<div>{project.title}</div>
+							) : (
+								<img
+									src={project.image}
+									alt={project.title}
+									width='200'
+									height='150'
+								/>
+							)}
 						</div>
 						<p class='project-description'>{project.description}</p>
 						<div class='tech-stack'>
@@ -61,7 +72,11 @@ const projects = [
 							</div>
 						</div>
 						<div class='project-link'>
-							<a href={project.link} class='retro-button' target='_blank' rel='noopener noreferrer'>
+							<a
+								href={project.link}
+								class='retro-button'
+								target='_blank'
+								rel='noopener noreferrer'>
 								💻 View Project
 							</a>
 						</div>

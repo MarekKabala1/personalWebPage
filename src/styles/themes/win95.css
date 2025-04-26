@@ -1,23 +1,24 @@
 :root.theme-win95 {
-	--background-color: #c0c0c0;
-	--text-color: #000000;
-	--border-color: #dfdfdf;
-	--border-shadow: #404040;
-	--font-family: 'Montserrat', system-ui, -apple-system, sans-serif;
-	--window-header: #000080;
-	--window-header-text: #ffffff;
-	--button-face: #c0c0c0;
-	--button-highlight: #ffffff;
-	--button-shadow: #808080;
-	--border-width: 2px;
-	--border-style: outset;
+  --background-color: #c0c0c0;
+  --text-color: #000000;
+  --border-color: #dfdfdf;
+  --border-shadow: #404040;
+  --font-family: 'Montserrat', system-ui, -apple-system, sans-serif;
+  --window-header: #000080;
+  --window-header-text: #ffffff;
+  --button-face: #c0c0c0;
+  --button-highlight: #ffffff;
+  --button-shadow: #808080;
+  --border-width: 2px;
+  --border-style: outset;
 }
 
 .theme-win95.blog-post,
 .theme-win95.theme-switcher select,
 .theme-win95.visitor-counter {
-	border: 2px solid;
-	border-color: var(--button-highlight) var(--button-shadow) var(--button-shadow) var(--button-highlight);
-	box-shadow: 1px 1px 0 0 #000000;
-	padding: 8px;
+  border: 2px solid;
+  border-color: var(--button-highlight) var(--button-shadow)
+    var(--button-shadow) var(--button-highlight);
+  box-shadow: 1px 1px 0 0 #000000;
+  padding: 8px;
 }

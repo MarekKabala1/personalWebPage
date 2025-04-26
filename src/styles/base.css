@@ -1,20 +1,20 @@
 :root {
-	--font-family: 'Comic Sans MS', cursive, sans-serif;
-	--border-style: solid;
-	--border-width: 2px;
-	--border-color: black;
-	--background-color: white;
-	--text-color: black;
+  --font-family: 'Comic Sans MS', cursive, sans-serif;
+  --border-style: solid;
+  --border-width: 2px;
+  --border-color: black;
+  --background-color: white;
+  --text-color: black;
 }
 
 body {
-	font-family: var(--font-family);
-	background-color: var(--background-color);
-	color: var(--text-color);
-	margin: 0;
-	padding: 0;
+  font-family: var(--font-family);
+  background-color: var(--background-color);
+  color: var(--text-color);
+  margin: 0;
+  padding: 0;
 }
 
 .pixelated-border {
-	border: var(--border-width) var(--border-style) var(--border-color);
+  border: var(--border-width) var(--border-style) var(--border-color);
 }
