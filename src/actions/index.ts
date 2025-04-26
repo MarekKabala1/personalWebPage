@@ -12,12 +12,22 @@ export const server = {
       email: z.optional(z.string().email()),
       message: z.string(),
     }),
-    handler: async ({ name, email, message }) => {
+    handler: async ({ name, email, message }, { request }) => {
       const convex = new ConvexHttpClient(import.meta.env.CONVEX_URL);
-      await convex.mutation(api.guestbook.addGuestbookEntry, {
+      const forwarded = request.headers.get("x-forwarded-for");
+      const ip = forwarded
+        ? forwarded.split(",")[0]
+        : request.headers.get("x-real-ip") || "unknown";
+      const alreadySigned = await convex.query(api.guestbook.hasAlreadySigned, { ip });
+
+      if (alreadySigned) {
+        throw new Error("You already signed the guestbook. Thank you!");
+      }
+      await convex.mutation(api.guestbook.add, {
         name,
         email,
         message,
+        ip
       });
     }
   })

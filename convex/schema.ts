@@ -34,5 +34,8 @@ export default defineSchema({
     message: v.string(),
     createdAt: v.number(),
     email: v.optional(v.string()),
-  }).index("by_date", ["createdAt"]),
+    ip: v.string()
+  }).index("by_date", ["createdAt"])
+    .index('by_ip', ['ip'])
+
 });

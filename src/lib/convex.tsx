@@ -1,7 +1,13 @@
 import { ConvexProvider, ConvexReactClient } from 'convex/react';
 import { type FunctionComponent, type JSX } from 'react';
 
-const client = new ConvexReactClient(import.meta.env.VITE_CONVEX_URL);
+const convexUrl = import.meta.env.PUBLIC_CONVEX_URL;
+
+if (!convexUrl) {
+  console.error('CONVEX_URL is not provided');
+}
+
+const client = new ConvexReactClient(convexUrl);
 
 export function withConvexProvider<Props extends JSX.IntrinsicAttributes>(
   Component: FunctionComponent<Props>,
