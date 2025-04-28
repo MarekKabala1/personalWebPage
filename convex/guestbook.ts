@@ -2,7 +2,6 @@ import { v } from "convex/values";
 import { mutation, query } from "./_generated/server";
 
 
-const timestamp = Date.now();
 export const add = mutation({
   args: {
     name: v.string(),
@@ -16,7 +15,7 @@ export const add = mutation({
     await ctx.db.insert('guestbook', {
       name: args.name,
       email: args.email,
-      createdAt: timestamp,
+      createdAt: args.createdAt ?? Date.now(),
       message: args.message,
       ip: args.ip
     })
@@ -36,7 +35,7 @@ export const hasAlreadySigned = query({
 
 export const get = query({
   args: {},
-  handler: async (ctx, args) => {
+  handler: async (ctx) => {
     return await ctx.db
       .query('guestbook')
       .order('desc')
