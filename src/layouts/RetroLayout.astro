@@ -7,7 +7,7 @@ import '../styles/themes/dark-retro.css';
 import type { RetroTheme } from '../utils/themeManager';
 import Navigation from '../components/Navigation.astro';
 import { ClientRouter } from 'astro:transitions';
-import { getVisitorCount } from '../utils/visitorTracker';
+import { getVisitorCount } from '../lib/visitorTracker';
 import { ConvexClient } from 'convex/browser';
 
 interface Props {
@@ -257,7 +257,7 @@ const convex = new ConvexClient(import.meta.env.PUBLIC_CONVEX_URL);
 	// VisitorTracker
 
 	import { ConvexClient } from 'convex/browser';
-	import { runVisitorTracker } from '../utils/visitorTracker';
+	import { runVisitorTracker } from '../lib/visitorTracker';
 
 	const convex = new ConvexClient(import.meta.env.PUBLIC_CONVEX_URL);
 	runVisitorTracker(convex);
