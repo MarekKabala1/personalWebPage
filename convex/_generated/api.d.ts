@@ -14,6 +14,7 @@ import type {
   FunctionReference,
 } from "convex/server";
 import type * as guestbook from "../guestbook.js";
+import type * as rateLimit from "../rateLimit.js";
 import type * as visitors from "../visitors.js";
 
 /**
@@ -26,6 +27,7 @@ import type * as visitors from "../visitors.js";
  */
 declare const fullApi: ApiFromModules<{
   guestbook: typeof guestbook;
+  rateLimit: typeof rateLimit;
   visitors: typeof visitors;
 }>;
 export declare const api: FilterApi<

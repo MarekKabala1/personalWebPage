@@ -1,6 +1,9 @@
 import { v } from "convex/values";
 import { mutation, query } from "./_generated/server";
+import { enforceRateLimit } from "./rateLimit";
 
+const MAX_PER_MINUTE = 10;
+const MS = 60000;
 
 export const add = mutation({
   args: {
@@ -10,7 +13,6 @@ export const add = mutation({
     email: v.optional(v.string()),
     ip: v.string(),
   },
-
   handler: async (ctx, args) => {
     await ctx.db.insert('guestbook', {
       name: args.name,
@@ -21,6 +23,34 @@ export const add = mutation({
     })
   }
 })
+export const get = query({
+  args: {},
+  handler: async (ctx) => {
+    return await ctx.db
+      .query('guestbook')
+      .order('desc')
+      .collect();
+  }
+})
+
+export const getRecentGuestbookEntries = query({
+  args: { ip: v.string() },
+  handler: async (ctx, { ip }) => {
+    const oneMinuteAgo = Date.now() - 60000;
+
+    const recentEntries = await ctx.db
+      .query("guestbook")
+      .filter(q =>
+        q.and(
+          q.eq(q.field("ip"), ip),
+          q.gte(q.field("_creationTime"), oneMinuteAgo)
+        )
+      )
+      .collect();
+
+    return { count: recentEntries.length };
+  }
+});
 
 export const hasAlreadySigned = query({
   args: { ip: v.string() },
@@ -32,13 +62,3 @@ export const hasAlreadySigned = query({
     return existing !== null;
   },
 });
-
-export const get = query({
-  args: {},
-  handler: async (ctx) => {
-    return await ctx.db
-      .query('guestbook')
-      .order('desc')
-      .collect();
-  }
-})
