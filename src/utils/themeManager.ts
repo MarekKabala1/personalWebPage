@@ -8,6 +8,8 @@ interface ThemeColors {
   link: string;
   border: string;
   accent?: string;
+  error?: string,
+  success?: string
 }
 
 const themeConfigs: Record<RetroTheme, ThemeColors> = {
@@ -19,6 +21,8 @@ const themeConfigs: Record<RetroTheme, ThemeColors> = {
     link: '#0000FF',
     border: '#dfdfdf #404040 #404040 #dfdfdf',
     accent: '#a0a0a0',
+    error: '#f44336',
+    success: '#4caf50'
   },
   'mac-os-9': {
     primary: "#d4d4d4",
@@ -28,6 +32,8 @@ const themeConfigs: Record<RetroTheme, ThemeColors> = {
     link: "#0000ee",
     border: "#000000",
     accent: '#3875d7',
+    error: '#f44336',
+    success: '#4caf50'
   },
   'web-1999': {
     primary: '#ffff00',
@@ -37,6 +43,8 @@ const themeConfigs: Record<RetroTheme, ThemeColors> = {
     link: '#61b9e8',
     border: '#ff0000',
     accent: '#0099cc',
+    error: '#f44336',
+    success: '#4caf50'
   },
   'dark-retro': {
     primary: '#1a1b1c',
@@ -45,7 +53,9 @@ const themeConfigs: Record<RetroTheme, ThemeColors> = {
     text: '#8bac0f',
     link: '#9bbc0f',
     border: '#306230',
-    accent: '#4a8c4a'
+    accent: '#4a8c4a',
+    error: '#f44336',
+    success: '#32a852'
   }
 };
 
