@@ -96,6 +96,7 @@ const sortedPosts = (allPosts as BlogPost[])
 						<button type='submit' class='retro-button'>Submit</button>
 					</form>
 					<GuestbookEntries client:load />
+					<div id='guestbook-popup' class='popup retro-window hidden'></div>
 				</div>
 			</div>
 		</div>
@@ -109,13 +110,67 @@ const sortedPosts = (allPosts as BlogPost[])
 				message: string;
 			}
 
+			const popup = document.querySelector('#guestbook-popup');
 			const form = document.querySelector('form');
 			form?.addEventListener('submit', async (e) => {
 				e.preventDefault();
 				const formData = new FormData(form);
-				const { error } = await actions.guestForm(formData as GuestFormData);
-				form.reset();
+				try {
+					const { error } = await actions.guestForm(formData as GuestFormData);
+
+					if (error) {
+						showPopup(`❌ ${error.message}`, 'error');
+						return;
+					}
+
+					form.reset();
+					showPopup('✅ Thanks for signing the guestbook!', 'success');
+				} catch (e) {
+					showPopup('❌ Something went wrong!', 'error');
+				}
 			});
+			function showPopup(message: string, type = 'success') {
+				if (!popup) {
+					return;
+				}
+				popup.textContent = message;
+				popup.classList.remove('hidden', 'error', 'success');
+				popup.classList.add(type);
+
+				setTimeout(() => {
+					popup.classList.add('hidden');
+				}, 3000);
+			}
 		</script>
+
+		<style>
+			.popup {
+				position: fixed;
+				top: 20px;
+				right: 20px;
+				background: #222;
+				color: white;
+				padding: 10px 20px;
+				border-radius: 8px;
+				font-family: monospace;
+				font-weight: bold;
+				box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+				z-index: 9999;
+				transition: opacity 0.3s ease;
+			}
+
+			.popup.success {
+				background-color: var(--theme-success);
+			}
+
+			.popup.error {
+				background-color: var(--theme-error);
+			}
+
+			.popup.hidden {
+				opacity: 0;
+				pointer-events: none;
+			}
+		</style>
 	</main>
 </RetroLayout>
