@@ -4,7 +4,6 @@ import { withConvexProvider } from '../lib/convex';
 
 export function GuestbookEntries() {
   const entries = useQuery(api.guestbook.get) || [];
-  console.log(entries);
 
   return (
     <div>
